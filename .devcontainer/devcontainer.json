@@ -1,0 +1,32 @@
+{
+  "name": "okusuri_nondene",
+  "dockerComposeFile": ["../compose.yml"],
+  "service": "web",
+  "workspaceFolder": "/myapp",
+  "memoryLimit": "4GB",
+  "remoteEnv": {
+  "RUBY_DEBUG_OPEN": "0.0.0.0:3333"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "extensions.verifySignature": false
+      },
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "KoichiSasada.vscode-rdbg",
+        "saoudrizwan.claude-dev",
+        "streetsidesoftware.code-spell-checker",
+        "dbaeumer.vscode-eslint",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "oderwat.indent-rainbow",
+        "ionutvmi.path-autocomplete",
+        "humao.rest-client",
+        "bradlc.vscode-tailwindcss",
+        "shardulm94.trailing-spaces",
+        "spmeesseman.vscode-taskexplorer"
+      ]
+    }
+  }
+}

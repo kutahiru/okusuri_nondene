@@ -3,6 +3,7 @@ Table users {
   user_name varchar [note: "名前"]
   provider varchar
   uid  varchar 
+  description_read bool [note: "アプリ説明読了フラグ"]
   Note: 'ユーザー'
 }
 
@@ -64,8 +65,18 @@ Table reward_conditions {
   id int [pk]
   medication_group_id int
   reward_name varchar [note: "ご褒美名"]
-  condition_type varchar [note: "条件タイプ"]
-  target_value int [note: "目標値"]
+  condition_type varchar [note: "条件タイプ 0:ご褒美なし 1:1週間 2:連続日数"]
+  target_weekday varchar [note: "曜日 条件タイプが1:1週間の場合に利用する"]
+  target_value int [note: "連続目標値"]
+  Note: 'ご褒美'
+}
+
+Table reward_history {
+  id int [pk]
+  medication_group_id int
+  reward_name varchar [note: "ご褒美名"]
+  reward_date date [note: "ご褒美獲得日"]
+  medication_management_id id [note: "ご褒美獲得時の最終服薬 次回のカウント開始に利用"]
   Note: 'ご褒美'
 }
 
@@ -87,3 +98,6 @@ Ref: "medication_groups"."id" < "medication_schedules"."medication_group_id"
 Ref: "medication_schedules"."id" < "medication_management"."medication_schedules_id"
 Ref: "medication_schedules"."id" < "schedule_drugs"."medication_schedules_id"
 Ref: "users"."id" < "medication_history"."user_id"
+Ref: "medication_groups"."id" - "reward_conditions"."medication_group_id"
+Ref: "medication_groups"."id" < "reward_history"."medication_group_id"
+Ref: "medication_management"."id" - "reward_history"."medication_management_id"
