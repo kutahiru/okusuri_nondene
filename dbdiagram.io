@@ -35,12 +35,10 @@ Table schedule_drugs {
   id int [pk]
   medication_schedules_id int
   drug_name varchar [note: "薬剤名"]
-  dose_amount decimal(10,2) [note: "投与量"]
-  dose_unit varchar [note: "投与単位"]
   Note: '服薬薬剤'
 }
 
-Table medication_management {
+Table medication_managements {
   id int [pk]
   medication_schedules_id int
   medication_date date
@@ -50,15 +48,13 @@ Table medication_management {
   Note: '服薬管理'
 }
 
-Table medication_history {
+Table medication_histories {
   id int [pk]
   user_id int
   medication_date date
   drug_name varchar [note: "薬剤名"]
-  dose_amount decimal(10,2) [note: "投与量"]
-  dose_unit varchar [note: "投与単位"]
   completed_at datetime [note: "服薬済み時刻"]
-  Note: '服薬履歴 薬剤データありの履歴確認時に使用'
+  Note: '服薬履歴 薬剤名ありの履歴確認時に使用'
 }
 
 Table reward_conditions {
@@ -71,12 +67,12 @@ Table reward_conditions {
   Note: 'ご褒美'
 }
 
-Table reward_history {
+Table reward_histories {
   id int [pk]
   medication_group_id int
   reward_name varchar [note: "ご褒美名"]
   reward_date date [note: "ご褒美獲得日"]
-  medication_management_id id [note: "ご褒美獲得時の最終服薬 次回のカウント開始に利用"]
+  medication_managements_id id [note: "ご褒美獲得時の最終服薬 次回のカウント開始に利用"]
   Note: 'ご褒美'
 }
 
@@ -95,9 +91,9 @@ Table active_storage_variant_records {
 Ref: "medication_groups"."id" < "medication_group_users"."medication_group_id"
 Ref: "users"."id" <> "medication_group_users"."user_id"
 Ref: "medication_groups"."id" < "medication_schedules"."medication_group_id"
-Ref: "medication_schedules"."id" < "medication_management"."medication_schedules_id"
+Ref: "medication_schedules"."id" < "medication_managements"."medication_schedules_id"
 Ref: "medication_schedules"."id" < "schedule_drugs"."medication_schedules_id"
-Ref: "users"."id" < "medication_history"."user_id"
+Ref: "users"."id" < "medication_histories"."user_id"  
 Ref: "medication_groups"."id" - "reward_conditions"."medication_group_id"
-Ref: "medication_groups"."id" < "reward_history"."medication_group_id"
-Ref: "medication_management"."id" - "reward_history"."medication_management_id"
+Ref: "medication_groups"."id" < "reward_histories"."medication_group_id"
+Ref: "medication_managements"."id" - "reward_histories"."medication_managements_id"

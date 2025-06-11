@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+
+  /* Coral（コーラルピンク） #FFB6B9 ベース */
+  --color-coral-50: #fef9f9;
+  --color-coral-100: #fef2f2;
+  --color-coral-200: #fde2e4;
+  --color-coral-300: #fcc9cd;
+  --color-coral-400: #fab0b5;
+  --color-coral-500: #FFB6B9;  /* 基準色 */
+  --color-coral-600: #e6a4a7;
+  --color-coral-700: #cc9295;
+  --color-coral-800: #b38083;
+  --color-coral-900: #996e71;
+
+  /* Beige（ウォームベージュ） #FAE3D9 ベース */
+  --color-beige-50: #fefcfb;
+  --color-beige-100: #fdf9f6;
+  --color-beige-200: #fbf2ed;
+  --color-beige-300: #f8ebe1;
+  --color-beige-400: #f6e7dd;
+  --color-beige-500: #FAE3D9;  /* 基準色 */
+  --color-beige-600: #e1ccc3;
+  --color-beige-700: #c8b6ad;
+  --color-beige-800: #af9f97;
+  --color-beige-900: #968881;
+
+  /* Sage（セージグリーン） #BBDED6 ベース */
+  --color-sage-50: #f7fbfa;
+  --color-sage-100: #eff7f5;
+  --color-sage-200: #e0f0eb;
+  --color-sage-300: #d0e9e1;
+  --color-sage-400: #c5e3db;
+  --color-sage-500: #BBDED6;  /* 基準色 */
+  --color-sage-600: #a8c8c1;
+  --color-sage-700: #95b3ac;
+  --color-sage-800: #829d97;
+  --color-sage-900: #6f8782;
+
+  /* Teal（ソフトティール） #8AC6D1 ベース */
+  --color-teal-50: #f4fafb;
+  --color-teal-100: #e9f5f7;
+  --color-teal-200: #d3ebef;
+  --color-teal-300: #bde1e7;
+  --color-teal-400: #a7d6df;
+  --color-teal-500: #8AC6D1;  /* 基準色 */
+  --color-teal-600: #7cb2bc;
+  --color-teal-700: #6e9ea8;
+  --color-teal-800: #608a93;
+  --color-teal-900: #52767f;
+
+  /* 基本のsans-serifフォントを上書き */
+  --font-sans: "Zen Maru Gothic", "Hiragino Sans", "Yu Gothic", sans-serif;
+
+  --color-dark-65: #222222a6;  /* 65%透明度 */
+}

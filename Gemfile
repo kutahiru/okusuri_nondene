@@ -35,10 +35,13 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "devise", "~> 4.9", ">= 4.9.4"
-gem "omniauth-google-oauth2", "~> 1.1"
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "omniauth-line"
+gem "omniauth-rails_csrf_protection"
 
-gem "importmap-rails"
+# gem "omniauth-google-oauth2", "~> 1.1"
+# gem "omniauth-rails_csrf_protection", "~> 1.0"
+
+# gem "importmap-rails"
 
 gem "kaminari", "1.2.2"
 

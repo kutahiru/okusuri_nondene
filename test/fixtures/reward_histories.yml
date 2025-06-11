@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  medication_group: one
+  reward_name: MyString
+  reward_date: 2025-06-10
+  medication_managements: one
+
+two:
+  medication_group: two
+  reward_name: MyString
+  reward_date: 2025-06-10
+  medication_managements: two
