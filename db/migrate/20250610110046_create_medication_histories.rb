@@ -1,6 +1,6 @@
 class CreateMedicationHistories < ActiveRecord::Migration[7.2]
   def change
-    create_table :medication_histories do |t|
+    create_table :medication_histories, comment: "服薬履歴" do |t|
       t.references :user, null: false, foreign_key: true
       t.date :medication_date, null: false
       t.string :drug_name, comment: "薬剤名"
@@ -8,7 +8,5 @@ class CreateMedicationHistories < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
-
-    execute "COMMENT ON TABLE medication_histories IS '服薬履歴 薬剤名ありの履歴確認時に使用'"
   end
 end

@@ -10,5 +10,7 @@ Rails.application.routes.draw do
     delete "logout", to: "users/sessions#destroy", as: :logout
   end
 
-  resources :medication_groups
+  resources :medication_groups do
+    resources :medication_schedules, shallow: true
+  end
 end

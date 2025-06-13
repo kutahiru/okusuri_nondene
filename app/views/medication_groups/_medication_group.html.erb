@@ -1,4 +1,5 @@
 <div>
+<%= link_to(medication_group_path(medication_group.id)) do %>
   <div class="mt-2 bg-teal-100 rounded-3xl">
     <div class="mx-6 py-4">
       <h1 class="text-xl font-semibold text-dark-65">
@@ -12,13 +13,7 @@
           </p>
         <% end %>
       </div>
-      <div class="flex items-center mt-4 gap-2">
-        <%= link_to "編集", edit_medication_group_path(medication_group.id),class: "block mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors" %>
-
-        <div class="block mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors">
-          履歴
-        </div>
-      </div>
     </div>
   </div>
+<% end %>
 </div>

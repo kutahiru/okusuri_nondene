@@ -76,6 +76,35 @@
       ]
     },
     {
+      "label": "js: yarn build --watch",
+      "type": "shell",
+      "command": "yarn",
+      "args": ["build", "--watch"],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "focus": false
+      },
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^\\[watch\\] build started",
+            "endsPattern": "^\\[watch\\] build finished"
+          }
+        }
+      ]
+    },
+    {
       "label": "Run bin/dev",
       "type": "shell",
       "command": "bin/dev",

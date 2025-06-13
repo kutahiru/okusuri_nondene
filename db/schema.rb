@@ -30,7 +30,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_10_110048) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "medication_histories", comment: "服薬履歴 薬剤名ありの履歴確認時に使用", force: :cascade do |t|
+  create_table "medication_histories", comment: "服薬履歴", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "medication_date", null: false
     t.string "drug_name", comment: "薬剤名"
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_10_110048) do
 
   create_table "medication_schedules", comment: "服薬スケジュール", force: :cascade do |t|
     t.bigint "medication_group_id", null: false
+    t.string "title", null: false
     t.time "medication_time", null: false, comment: "服薬時刻"
     t.integer "reminder_count", default: 0
     t.integer "reminder_interval", comment: "リマインド間隔（分）"
@@ -62,7 +63,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_10_110048) do
     t.index ["medication_group_id"], name: "index_medication_schedules_on_medication_group_id"
   end
 
-  create_table "reward_conditions", comment: "ご褒美", force: :cascade do |t|
+  create_table "reward_conditions", comment: "ご褒美管理", force: :cascade do |t|
     t.bigint "medication_group_id", null: false
     t.string "reward_name", null: false, comment: "ご褒美名"
     t.integer "condition_type", null: false, comment: "条件タイプ 0:ご褒美なし 1:1週間 2:連続日数"
@@ -73,7 +74,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_10_110048) do
     t.index ["medication_group_id"], name: "index_reward_conditions_on_medication_group_id"
   end
 
-  create_table "reward_histories", comment: "ご褒美", force: :cascade do |t|
+  create_table "reward_histories", comment: "ご褒美履歴", force: :cascade do |t|
     t.bigint "medication_group_id", null: false
     t.string "reward_name", null: false, comment: "ご褒美名"
     t.date "reward_date", null: false, comment: "ご褒美獲得日"

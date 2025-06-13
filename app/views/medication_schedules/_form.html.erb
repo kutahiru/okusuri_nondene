@@ -1,0 +1,89 @@
+<%# レイアウトをモーダル用に整える %>
+<%# turbo:submit-end（Turboのsubmit後）イベント発火時に、modal#close（モーダルを閉じる）を実行する %>
+<%= form_with(model: medication_schedule, local: false, data: { action: "turbo:submit-end->modal#close" }) do |form| %>
+
+
+  <%# 通知時間 %>
+  <div class="mb-4">
+    <%= form.label :medication_time, "通知時間", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <div class="flex items-center space-x-2">
+      <div>
+        <%= form.time_select :medication_time,
+              {
+                minute_step: 15,
+                prompt: { hour: '時', minute: '分' }
+              },
+              {
+                class: "px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white appearance-none #{'border-red-300 focus:ring-red-500 focus:border-red-500' if medication_schedule.errors[:medication_time].any?}"
+              } %>
+      </div>
+      <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+    </div>
+    <%# エラーメッセージ表示 %>
+    <% if medication_schedule.errors[:medication_time].any? %>
+      <div class="mt-1 text-sm text-red-600">
+        <%= medication_schedule.errors[:medication_time].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# リマインド回数 %>
+  <div class="mb-4">
+    <%= form.label :reminder_count, "回数", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select  :reminder_interval, options_for_select([[0, 0], [1, 1], [2, 2], [3, 3]]),
+        class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors",
+        placeholder: "リマインド回数を入力してください" %>
+    <%# エラーメッセージ表示 %>
+    <% if medication_schedule.errors[:reminder_count].any? %>
+      <div class="mt-1 text-sm text-red-600">
+        <%= medication_schedule.errors[:reminder_count].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# リマインド間隔 %>
+  <div class="mb-4">
+    <%= form.label :reminder_interval, "間隔", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.select  :reminder_interval, options_for_select([[10, 10], [20, 20], [30, 30], [40, 40], [50, 50], [60, 60]]),
+        class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors",
+        placeholder: "リマインド回数を入力してください" %>
+    <%# エラーメッセージ表示 %>
+    <% if medication_schedule.errors[:reminder_interval].any? %>
+      <div class="mt-1 text-sm text-red-600">
+        <%= medication_schedule.errors[:reminder_interval].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <%# 家族通知タイミング %>
+  <div class="mb-4">
+    <%= form.label :family_notification_delay, "家族通知タイミング", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= form.text_field :family_notification_delay,
+        class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors",
+        placeholder: "家族通知タイミングを入力してください" %>
+    <%# エラーメッセージ表示 %>
+    <% if medication_schedule.errors[:family_notification_delay].any? %>
+      <div class="mt-1 text-sm text-red-600">
+        <%= medication_schedule.errors[:family_notification_delay].first %>
+      </div>
+    <% end %>
+  </div>
+
+
+  <%# 送信ボタン %>
+  <div class="flex justify-end space-x-3 pt-4">
+    <%# キャンセルボタン %>
+    <button type="button"
+            data-action="click->modal#hide"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+      キャンセル
+    </button>
+
+    <%# 送信ボタン %>
+    <%= form.submit medication_schedule.persisted? ? "更新" : "作成",
+        class: "px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+  </div>
+
+<% end %>
