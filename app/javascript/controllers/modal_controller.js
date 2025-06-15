@@ -25,7 +25,7 @@ export default class extends Controller {
     // モーダルを表示（フェードイン効果付き）
     this.element.classList.remove("hidden", "pointer-events-none")
     // this.element.classList.add("opacity-100", "pointer-events-auto")
-    
+
     // コンテンツをスケールアップ
     if (this.hasContentTarget) {
       this.contentTarget.classList.remove("scale-95")
@@ -37,13 +37,13 @@ export default class extends Controller {
     // モーダルを非表示（フェードアウト効果付き）
     // this.element.classList.remove("opacity-100", "pointer-events-auto")
     this.element.classList.add("hidden", "pointer-events-none")
-    
+
     // コンテンツをスケールダウン
     if (this.hasContentTarget) {
       this.contentTarget.classList.remove("scale-100")
       this.contentTarget.classList.add("scale-95")
     }
-    
+
     // アニメーション完了後にモーダルを削除
     setTimeout(() => {
       this.element.remove()

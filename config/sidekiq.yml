@@ -1,0 +1,6 @@
+:concurrency: 5
+:scheduler:
+  :schedule:
+    fetch_schedule:
+      cron: '0 8 * * *'
+      class: FetchScheduleJob
