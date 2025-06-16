@@ -1,5 +1,5 @@
 class LineNotificationService
-  def send_line_message(user_id, message_text)
+  def self.send_line_message(user_id, message_text)
     # メッセージリクエストを作成
     push_request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
       to: user_id,
