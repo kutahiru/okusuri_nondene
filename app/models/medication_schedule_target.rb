@@ -1,7 +1,11 @@
 class MedicationScheduleTarget
   include ActiveModel::Model
   include ActiveModel::Attributes
-  include UserTypeEnumerable
+
+  USER_TYPES = {
+    medication_taker: 0,  # 服薬者
+    family_watcher: 1     # 見守り家族
+  }.freeze
 
   attribute :medication_schedule_id, :integer
   attribute :medication_management_id, :integer
@@ -11,4 +15,12 @@ class MedicationScheduleTarget
   attribute :user_id, :integer
   attribute :uid, :string
   attribute :user_type, :integer
+
+  def medication_taker?
+    user_type == USER_TYPES[:medication_taker]
+  end
+
+  def family_watcher?
+    user_type == USER_TYPES[:family_watcher]
+  end
 end

@@ -56,7 +56,7 @@ gem "rails-i18n", "~> 7.0.0"
 gem "sidekiq"
 gem "sidekiq-scheduler"
 gem "line-bot-api"
-
+gem "redis"
 
 
 group :development, :test do

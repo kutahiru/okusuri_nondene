@@ -10,7 +10,7 @@ class NotificationDatabaseService
       ,NULL AS medication_management_id
       ,sch.title AS schedule_title
       ,CURRENT_DATE + sch.medication_time AS medication_date_time
-      ,CURRENT_DATE + sch.medication_time + (family_notification_delay * INTERVAL '1 minute') AS family_notification_date_time
+      ,CURRENT_DATE + sch.medication_time + (sch.family_notification_delay * INTERVAL '1 minute') AS family_notification_date_time
       ,u.id AS user_id
       ,u.uid
       ,gu.user_type --0:服薬者 1:見守り家族
@@ -28,7 +28,7 @@ class NotificationDatabaseService
     	  THEN  medication_time >= CURRENT_TIME - INTERVAL '1 hour'
     	    AND medication_time < '24:00:00'
         WHEN CURRENT_TIME < '01:00:00' --1時未満の場合は、0時以降のスケジュールのみ取得
-    	  THEN  medication_time >= '0:00:00'#{' '}
+    	  THEN  medication_time >= '0:00:00'
     	    AND medication_time < CURRENT_TIME + INTERVAL '1 hour'
         ELSE
     	  medication_time BETWEEN CURRENT_TIME - INTERVAL '1 hour' AND CURRENT_TIME + INTERVAL '1 hour'
@@ -42,13 +42,14 @@ class NotificationDatabaseService
     )
 
     result.map do |row|
+      p row
       MedicationScheduleTarget.new(row.to_h)
     end
   end
 
   # 管理テーブル作成
   def self.insert_medication_management(notification_target)
-    medication_management = MedicationManagement.create(
+    medication_management = MedicationManagement.find_or_create_by(
       medication_schedule_id: notification_target.medication_schedule_id,
       medication_date: notification_target.medication_date_time.to_date
       )

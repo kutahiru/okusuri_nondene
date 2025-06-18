@@ -14,7 +14,8 @@ class MedicationGroupsController < ApplicationController
   private
 
   def get_medication_group
-    @medication_group = current_user.medication_groups.includes(:users).find(params[:id])
+    @medication_group = current_user.medication_groups.find(params[:id])
+    @medication_group_users = @medication_group.medication_group_users.includes(:user).order("medication_group_users.user_type")
     @medication_schedules = @medication_group.medication_schedules # グループに紐づくスケジュールを取得
   rescue ActiveRecord::RecordNotFound
     redirect_to medication_groups_path, alert: "アクセス権限がないか、グループが存在しません。"

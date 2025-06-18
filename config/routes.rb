@@ -12,5 +12,12 @@ Rails.application.routes.draw do
 
   resources :medication_groups do
     resources :medication_schedules, shallow: true
+    resources :medication_group_users, shallow: true
+  end
+
+  if Rails.env.development?
+    require "sidekiq/web"
+    require "sidekiq-scheduler/web"
+    mount Sidekiq::Web => "/sidekiq"
   end
 end

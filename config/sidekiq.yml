@@ -1,6 +1,10 @@
 :concurrency: 5
+:queues:
+  - default
 :scheduler:
   :schedule:
-    fetch_schedule:
-      cron: '0 8 * * *'
-      class: FetchScheduleJob
+    get_notification_targets:
+      cron: '*/30 * * * *'
+      class: GetNotificationTargetsJob
+      queue: default
+      description: '30分毎に通知対象を取得'

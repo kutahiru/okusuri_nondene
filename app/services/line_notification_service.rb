@@ -18,7 +18,7 @@ class LineNotificationService
 
   private
 
-  def client
+  def self.client
     @client ||= Line::Bot::V2::MessagingApi::ApiClient.new(
       channel_access_token: Rails.application.credentials.dig(:line_message, :channel_access_token)
     )
