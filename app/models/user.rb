@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :medication_group_users, dependent: :destroy
   has_many :medication_groups, through: :medication_group_users
   has_many :medication_histories, dependent: :destroy
+  has_many :medication_group_invitations, dependent: :destroy
 
   enum description_read: { not_read: false, read: true }, _prefix: :description
 

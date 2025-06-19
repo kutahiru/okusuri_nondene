@@ -6,4 +6,5 @@ class MedicationGroup < ApplicationRecord
   has_many :medication_schedules, dependent: :destroy
   has_many :reward_conditions, dependent: :destroy
   has_many :reward_histories, dependent: :destroy
+  has_many :medication_group_invitations, dependent: :destroy
 end

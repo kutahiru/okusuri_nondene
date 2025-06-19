@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_10_110048) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_18_073623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "medication_group_invitations", comment: "服薬グループ招待", force: :cascade do |t|
+    t.bigint "medication_group_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "max_uses", default: 1, null: false, comment: "最大使用数"
+    t.integer "used_count", default: 0, null: false, comment: "使用回数"
+    t.datetime "expires_at", comment: "有効期限"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["medication_group_id"], name: "index_medication_group_invitations_on_medication_group_id"
+    t.index ["user_id"], name: "index_medication_group_invitations_on_user_id"
+  end
 
   create_table "medication_group_users", comment: "服薬グループユーザー", force: :cascade do |t|
     t.bigint "medication_group_id", null: false
@@ -103,6 +115,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_10_110048) do
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
   end
 
+  add_foreign_key "medication_group_invitations", "medication_groups"
+  add_foreign_key "medication_group_invitations", "users"
   add_foreign_key "medication_group_users", "medication_groups"
   add_foreign_key "medication_group_users", "users"
   add_foreign_key "medication_histories", "users"
