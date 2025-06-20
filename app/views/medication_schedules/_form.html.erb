@@ -1,4 +1,4 @@
-<%= form_with(model: medication_schedule, local: false,
+<%= form_with(model: medication_schedule.persisted? ? medication_schedule : [@medication_group, medication_schedule], local: false,
   data: { action: "turbo:submit-end->modal#close" }
   ) do |form| %>
 

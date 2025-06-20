@@ -9,6 +9,7 @@ class MedicationGroupsController < ApplicationController
   end
 
   def edit
+    @medication_group = current_user.medication_groups.find(params[:id])
   end
 
   private

@@ -3,11 +3,16 @@
 
   <div class="container px-6 py-2 mx-auto">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-3 xl:grid-cols-4">
+    <% if @medication_groups.present? %>
+      <%= render @medication_groups %>
+    <% end %>
+    </div>
 
-    <!-- <% if @medication_groups.present? %>    -->
-      <%= render @medication_groups %> 
-    <!-- <% end %> -->
-
+    <div class="pt-2 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-4">
+      <%= link_to "グループ追加",
+      new_medication_group_path,
+      class: "mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors",
+      data: { turbo_frame: "modal" } %>
     </div>
   </div>
 </section>

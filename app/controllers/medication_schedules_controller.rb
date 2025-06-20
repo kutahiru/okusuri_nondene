@@ -1,5 +1,21 @@
 class MedicationSchedulesController < ApplicationController
   before_action :get_medication_schedule, only: %i[edit update]
+  def new
+    @medication_group = MedicationGroup.find(params[:medication_group_id])
+    @medication_schedule = @medication_group.medication_schedules.build
+  end
+
+  def create
+    @medication_group = MedicationGroup.find(params[:medication_group_id])
+    @medication_schedule = @medication_group.medication_schedules.create!(medication_schedule_update_param)
+
+    render turbo_stream: turbo_stream.append(
+      "medication_schedules",
+      partial: "medication_schedules/medication_schedule",
+      locals: { medication_schedule: @medication_schedule }
+    )
+  end
+
   def edit
   end
 
@@ -9,7 +25,7 @@ class MedicationSchedulesController < ApplicationController
       @medication_schedule,
       partial: "medication_schedules/medication_schedule",
       locals: { medication_schedule: @medication_schedule }
-    )
+      )
     else
       render :edit, status: :unprocessable_entity
     end

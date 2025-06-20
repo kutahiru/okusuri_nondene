@@ -31,17 +31,18 @@
       </div>
     </div>
 
-
-
     <%# スケジュール部 %>
-    <div class="pt-2 grid grid-cols-1 gap-8 md:grid-cols-3 xl:grid-cols-4">
+    <div id="medication_schedules" class="pt-2 grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-3 xl:grid-cols-4">
       <% if @medication_schedules.present? %>
         <%= render @medication_schedules %>
       <% end %>
     </div>
 
-    <div class="pt-2 grid grid-cols-1 gap-8 md:grid-cols-3 xl:grid-cols-4">
-      <%= link_to "スケジュール追加", new_medication_group_medication_schedule_path(@medication_group),class: "mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors" %>
+    <div class="pt-2 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-4">
+      <%= link_to "スケジュール追加",
+      new_medication_group_medication_schedule_path(@medication_group),
+      class: "mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors",
+      data: { turbo_frame: "modal" } %>
     </div>
   </div>
 </section>
