@@ -22,9 +22,9 @@ class MedicationSchedulesController < ApplicationController
   def update
     if @medication_schedule.update(medication_schedule_update_param)
       render turbo_stream: turbo_stream.replace(
-      @medication_schedule,
-      partial: "medication_schedules/medication_schedule",
-      locals: { medication_schedule: @medication_schedule }
+        @medication_schedule,
+        partial: "medication_schedules/medication_schedule",
+        locals: { medication_schedule: @medication_schedule }
       )
     else
       render :edit, status: :unprocessable_entity

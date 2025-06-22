@@ -25,4 +25,7 @@ Rails.application.routes.draw do
     require "sidekiq-scheduler/web"
     mount Sidekiq::Web => "/sidekiq"
   end
+
+  # lineのWebhook
+  post "/callback", to: "line_bot#callback"
 end

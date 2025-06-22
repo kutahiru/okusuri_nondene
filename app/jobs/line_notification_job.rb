@@ -11,7 +11,7 @@ class LineNotificationJob < ApplicationJob
     return if medication_management.medication_taken?
 
     # LINE通知送信
-    LineNotificationService.send_line_message(notification_target.uid, notification_target.schedule_title)
+    LineNotificationService.send_line_message(medication_management.id, notification_target.uid, notification_target.schedule_title)
 
     # 見守り家族なら終了
     return if notification_target.family_watcher?
