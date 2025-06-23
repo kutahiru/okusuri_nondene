@@ -1,4 +1,6 @@
 class LineBotController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def callback
     body = request.body.read # LINEから送られたJSONデータ
     signature = request.env["HTTP_X_LINE_SIGNATURE"] # LINEが送ってきた署名
@@ -30,12 +32,13 @@ class LineBotController < ApplicationController
     case event
     when Line::Bot::V2::Webhook::PostbackEvent
       handle_post_back_event(event)
-    when Line::Bot::V2::Webhook::MessageEvent
-      handle_message_event(event)           # メッセージが来た時
-    when Line::Bot::V2::Webhook::FollowEvent
-      handle_follow_event(event)            # フォローされた時
-    when Line::Bot::V2::Webhook::UnfollowEvent
-      handle_unfollow_event(event)          # フォローを外された時
+    end
+  end
+
+  def handle_post_back_event(event)
+    if event.postback && (match_data = event.postback.data.match(/^medication_taken_(\d+)$/))
+      medication_management_id = match_data[1].to_i
+      MedicationManagement.update_is_taken!(medication_management_id)
     end
   end
 end

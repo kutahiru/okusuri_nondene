@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "medication_managements/index"
   root "home#top"
 
   devise_for :users, controllers: {
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
     resources :medication_schedules, shallow: true
     resources :medication_group_users, shallow: true
     resources :medication_group_invitations, shallow: true
+    resources :medication_managements, shallow: true
   end
 
   # 招待URL専用（トークンベース）

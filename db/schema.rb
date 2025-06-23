@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_18_073623) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_22_203858) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,16 +42,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_18_073623) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "medication_histories", comment: "服薬履歴", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.date "medication_date", null: false
-    t.string "drug_name", comment: "薬剤名"
-    t.datetime "completed_at", comment: "服薬済み時刻"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_medication_histories_on_user_id"
-  end
-
   create_table "medication_managements", comment: "服薬管理", force: :cascade do |t|
     t.bigint "medication_schedule_id", null: false
     t.date "medication_date", null: false
@@ -60,6 +50,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_18_073623) do
     t.integer "reminder_sent_count", default: 0, null: false, comment: "リマインダー送信回数"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "original_schedule_title"
+    t.bigint "medication_group_id", null: false
+    t.index ["medication_group_id"], name: "index_medication_managements_on_medication_group_id"
     t.index ["medication_schedule_id"], name: "index_medication_managements_on_medication_schedule_id"
   end
 
@@ -119,7 +112,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_18_073623) do
   add_foreign_key "medication_group_invitations", "users"
   add_foreign_key "medication_group_users", "medication_groups"
   add_foreign_key "medication_group_users", "users"
-  add_foreign_key "medication_histories", "users"
+  add_foreign_key "medication_managements", "medication_groups"
   add_foreign_key "medication_managements", "medication_schedules"
   add_foreign_key "medication_schedules", "medication_groups"
   add_foreign_key "reward_conditions", "medication_groups"

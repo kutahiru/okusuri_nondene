@@ -81,4 +81,6 @@ Rails.application.configure do
 
   config.web_console.automount = true
   config.web_console.permissions = [ "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16" ]
+
+  config.hosts << /.*\.ngrok-free\.app/
 end

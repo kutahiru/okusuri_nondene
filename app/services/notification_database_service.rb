@@ -14,6 +14,7 @@ class NotificationDatabaseService
       ,u.id AS user_id
       ,u.uid
       ,gu.user_type --0:服薬者 1:見守り家族
+      ,sch.medication_group_id
     FROM medication_schedules sch
     LEFT JOIN medication_managements ma ON
           sch.id = ma.medication_schedule_id
@@ -52,7 +53,11 @@ class NotificationDatabaseService
     medication_management = MedicationManagement.find_or_create_by(
       medication_schedule_id: notification_target.medication_schedule_id,
       medication_date: notification_target.medication_date_time.to_date
-      )
+    ) do |management|
+      # 作成時のみ設定
+      management.original_schedule_title = notification_target.schedule_title
+      management.medication_group_id = notification_target.medication_group_id
+    end
 
     medication_management
   end

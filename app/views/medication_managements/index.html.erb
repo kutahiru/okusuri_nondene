@@ -1,0 +1,22 @@
+<section class="container px-6 mx-auto">
+  <h2 class="px-6 mt-2 text-4xl font-bold text-dark-65">服薬履歴</h2>
+
+  <div class="px-6 py-2 grid grid-cols-1 gap-2 md:grid-cols-2">
+    <%# 左側15日まで %>
+    <div class="space-y-2">
+      <% @calendar_days.select { |day| day[:day] <= 15 }.each do |day_info| %>
+        <% day_medications = @medications_by_date[day_info[:date]] || [] %>
+        <%= render "calendar_day", day_info: day_info, day_medications: day_medications %>
+      <% end %>
+    </div>
+
+    <%# 右側16日以降 %>
+    <div class="space-y-2">
+      <% @calendar_days.select { |day| day[:day] > 15 }.each do |day_info| %>
+        <% day_medications = @medications_by_date[day_info[:date]] || [] %>
+        <%= render "calendar_day", day_info: day_info, day_medications: day_medications %>
+      <% end %>
+    </div>
+  </div>
+
+</section>

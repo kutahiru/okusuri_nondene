@@ -1,19 +1,35 @@
 class LineNotificationService
   def self.send_line_message(medication_management_id, uid, message_text)
-    # # メッセージリクエストを作成
-    # push_request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
-    #   to: uid,
-    #   messages: [
-    #     Line::Bot::V2::MessagingApi::TextMessage.new(text: message_text)
-    #   ]
-    # )
+    # ボタンにIDを埋め込む
+    taken_data = "medication_taken_#{medication_management_id}"
 
-    # # メッセージ送信
-    # response, status_code, headers = client.push_message_with_http_info(
-    #   push_message_request: push_request
-    # )
+    buttons_template = Line::Bot::V2::MessagingApi::ButtonsTemplate.new(
+      text: message_text,
+      actions: [
+        Line::Bot::V2::MessagingApi::PostbackAction.new(
+          label: "服薬しました",
+          data: taken_data,
+          display_text: "服薬しました"
+        )
+      ]
+    )
 
-    # status_code == 200
+    template_message = Line::Bot::V2::MessagingApi::TemplateMessage.new(
+      alt_text: message_text,
+      template: buttons_template
+    )
+
+    push_request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
+        to: uid,
+        messages: [ template_message ]
+      )
+
+    # メッセージ送信
+    response, status_code, headers = client.push_message_with_http_info(
+      push_message_request: push_request
+    )
+
+    status_code == 200
   end
 
   private
