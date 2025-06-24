@@ -1,0 +1,71 @@
+<%= form_with url: update_multiple_medication_group_medication_group_users_path, 
+              method: :patch, 
+              local: false,
+              data: { action: "turbo:submit-end->modal#close" } do |form| %>
+
+  <%# メンバーロール編集 %>
+  <div class="mb-4">
+    <h3 class="text-lg font-semibold text-gray-700 mb-4">メンバーのロールを変更</h3>
+    
+    <div class="space-y-4">
+      <% @medication_group_users.each_with_index do |medication_group_user, index| %>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center space-x-4">
+              <div>
+                <p class="font-medium text-gray-900">
+                  <%= medication_group_user.user.user_name %>
+                </p>
+                <p class="text-sm text-gray-500">
+                  現在: <%= medication_group_user.user_type_i18n %>
+                </p>
+              </div>
+            </div>
+            
+            <%# 削除ボタン - フォーム外でTurbo使用 %>
+            <%= link_to "削除", 
+                        medication_group_user_path(medication_group_user),
+                        method: :delete,
+                        class: "bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors",
+                        data: { 
+                          turbo_method: :delete,
+                          turbo_confirm: "本当に#{medication_group_user.user.user_name}さんを削除しますか？"
+                        } %>
+          </div>
+          
+          <div class="flex space-x-2 justify-end">
+            <%= form.hidden_field "medication_group_users[#{index}][id]", value: medication_group_user.id %>
+
+            <% MedicationGroupUser.user_types.each do |key, value| %>
+              <label class="relative cursor-pointer">
+                <%= form.radio_button "medication_group_users[#{index}][user_type]", 
+                                    key,
+                                    checked: medication_group_user.user_type == key,
+                                    class: "sr-only peer" %>
+                <div class="px-3 py-2 border-2 border-gray-200 rounded-lg text-center transition-all duration-200 peer-checked:border-teal-500 peer-checked:bg-teal-100 hover:border-gray-300">
+                  <div class="text-sm font-medium text-gray-900">
+                    <%= MedicationGroupUser.human_attribute_name("user_type.#{key}") %>
+                  </div>
+                </div>
+              </label>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# 送信ボタン %>
+  <div class="flex justify-end space-x-3 pt-4">
+    <%# 送信ボタン %>
+    <%= form.submit "更新",
+        class: "px-4 py-2 text-sm font-medium text-gray-700 bg-sage-500 border border-transparent rounded-md hover:bg-sage-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
+
+    <%# キャンセルボタン %>
+    <button type="button"
+            data-action="click->modal#hide"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+      キャンセル
+    </button>
+  </div>
+<% end %>

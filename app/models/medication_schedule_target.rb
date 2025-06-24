@@ -15,6 +15,7 @@ class MedicationScheduleTarget
   attribute :user_id, :integer
   attribute :uid, :string
   attribute :user_type, :integer
+  attribute :medication_group_id, :integer
 
   def medication_taker?
     user_type == USER_TYPES[:medication_taker]

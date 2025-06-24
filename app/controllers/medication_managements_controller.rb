@@ -2,16 +2,17 @@ class MedicationManagementsController < ApplicationController
   def index
     @medication_group = current_user.medication_groups.find(params[:medication_group_id])
 
-    target_date = Date.current # デバッグ用、本来は指定月
-
-    # 指定月のカレンダー作成
     # 年月の取得（デフォルトは今月）
-    year = target_date.year
-    month = target_date.month
-    target_date = Date.new(year, month, 1)
+    year = params["year"].to_i
+    month = params["month"].to_i
+    @target_date = begin
+      Date.new(year, month, 1)
+    rescue ArgumentError
+      Date.current
+    end
 
     # カレンダーの日付リストを生成
-    @calendar_days = (target_date.beginning_of_month..target_date.end_of_month).map do |date|
+    @calendar_days = (@target_date.beginning_of_month..@target_date.end_of_month).map do |date|
       {
         date: date,
         day: date.day,
@@ -23,7 +24,7 @@ class MedicationManagementsController < ApplicationController
     end
 
     @medication_managements = @medication_group.medication_managements
-      .for_month(target_date)
+      .for_month(@target_date)
 
     # 日付別にグループ化
     @medications_by_date = @medication_managements.group_by(&:medication_date)

@@ -16,9 +16,16 @@ class MedicationManagement < ApplicationRecord
   # 服薬済に変更する
   def self.update_is_taken!(id)
     medication_management = MedicationManagement.find(id)
+
+    # 既に服薬済なら終了
+    return if medication_management.medication_taken?
+
     medication_management.update!(
       is_taken: true,
       completed_at: Time.current
     )
+
+    # 服薬済に変更された場合、見守り家族に通知
+    LineNotificationService.family_watcher_send_line_message(medication_management)
   end
 end

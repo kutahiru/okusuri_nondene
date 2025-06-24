@@ -3,27 +3,29 @@
 
   <div class="container px-6 py-2 mx-auto">
     <%# メンバー部 %>
-    <div class="px-6 py-4 mt-2 bg-teal-100 rounded-3xl md:w-70">
-      <div class="w-full">
-        <% @medication_group_users.each do |user| %>
-          <div class="flex justify-between">
-          <p class="text-dark-65">
-            <%= user.user.user_name %> 
-          </p>
-          <p class="text-dark-65">
-            <%= user.user_type_i18n  %> 
-          </p>
-          </div>
-        <% end %>
-      </div>
-      <div class="pt-2" data-controller="invitation">
-        <%= button_to "招待リンク",
-        medication_group_medication_group_invitations_path(@medication_group),
-        method: :post,
-        class: "block mt-2 px-4 py-2 bg-sage-500 md:w-40 rounded-xl text-center hover:bg-sage-600 transition-colors",
-        data: { disable_with: "発行中...",
-        action: "click->invitation#generate"} %>
+    <div class="px-6 py-4 mt-2 bg-teal-100 rounded-3xl md:w-80">
 
+      <%# ユーザーのパーシャル %>
+      <div id="medication_group_users" class="w-full">
+        <%= render @medication_group_users %>
+      </div>
+
+      <div class="pt-2" data-controller="invitation">
+        <div class="flex justify-end">
+          <%= button_to "招待リンク",
+          medication_group_medication_group_invitations_path(@medication_group),
+          method: :post,
+          class: "block mt-2 px-4 py-2 bg-sage-500 md:w-40 rounded-xl text-center hover:bg-sage-600 transition-colors",
+          data: { disable_with: "発行中...",
+          action: "click->invitation#generate"} %>
+
+          <div class="ml-2">
+            <%= link_to "編集",
+            edit_multiple_medication_group_medication_group_users_path(@medication_group.id),
+            class: "block mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors",
+            data: { turbo_frame: "modal" } %>
+          </div>
+        </div>
         <!-- 成功メッセージ -->
         <div data-invitation-target="alert" class="hidden mt-2 p-2 bg-green-100 text-green-800 rounded">
           <span data-invitation-target="message"></span>

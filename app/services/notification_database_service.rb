@@ -29,7 +29,7 @@ class NotificationDatabaseService
     	  THEN  medication_time >= CURRENT_TIME - INTERVAL '1 hour'
     	    AND medication_time < '24:00:00'
         WHEN CURRENT_TIME < '01:00:00' --1時未満の場合は、0時以降のスケジュールのみ取得
-    	  THEN  medication_time >= '0:00:00'
+    	  THEN  medication_time >= '00:00:00'
     	    AND medication_time < CURRENT_TIME + INTERVAL '1 hour'
         ELSE
     	  medication_time BETWEEN CURRENT_TIME - INTERVAL '1 hour' AND CURRENT_TIME + INTERVAL '1 hour'

@@ -19,11 +19,9 @@ class GetNotificationTargetsJob < ApplicationJob
 
       if target.medication_taker?
         # 服薬者の通知をJOBキューに登録
-        # LineNotificationJob.perform_at(target.medication_date_time, target)
         LineNotificationJob.set(wait_until: target.medication_date_time).perform_later(target_hash)
       else
         # 見守り家族の通知をJOBキューに登録
-        # LineNotificationJob.perform_at(target.family_notification_date_time, target)
         LineNotificationJob.set(wait_until: target.family_notification_date_time).perform_later(target_hash)
       end
     end

@@ -4,9 +4,9 @@
     <div class="pl-2">
       <%= medication.original_schedule_title %>
       <% if medication.medication_taken? %>
-        <span>服薬済</span>
+        <span>飲んだよ</span>
       <% else %>
-        <span class="font-semibold">未服薬</span>
+        <span class="font-semibold">飲めてない</span>
       <% end %>
     </div>
   <% end %>

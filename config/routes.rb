@@ -13,7 +13,12 @@ Rails.application.routes.draw do
 
   resources :medication_groups do
     resources :medication_schedules, shallow: true
-    resources :medication_group_users, shallow: true
+    resources :medication_group_users, shallow: true do
+      collection do
+        get :edit_multiple
+        patch :update_multiple
+      end
+    end
     resources :medication_group_invitations, shallow: true
     resources :medication_managements, shallow: true
   end

@@ -2,5 +2,5 @@ ja:
   enums:
     medication_group_user:
       user_type:
-        medication_taker: "服薬者"
+        medication_taker: "おくすり飲む人"
         family_watcher: "見守り家族"
