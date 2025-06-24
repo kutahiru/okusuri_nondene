@@ -6,7 +6,7 @@ class MedicationGroupUsersController < ApplicationController
   end
 
   def edit_multiple
-    @medication_group_users = MedicationGroupUser.where(medication_group_id: params[:medication_group_id])
+    @medication_group_users = MedicationGroupUser.where(medication_group_id: params[:medication_group_id]).order(:id)
   end
 
   def update_multiple

@@ -15,14 +15,14 @@
           <%= button_to "招待リンク",
           medication_group_medication_group_invitations_path(@medication_group),
           method: :post,
-          class: "block mt-2 px-4 py-2 bg-sage-500 md:w-40 rounded-xl text-center hover:bg-sage-600 transition-colors",
+          class: "block mt-2 px-4 py-2 bg-sage-500 md:w-40 rounded-lg text-center hover:bg-sage-600 transition-colors",
           data: { disable_with: "発行中...",
           action: "click->invitation#generate"} %>
 
           <div class="ml-2">
             <%= link_to "編集",
             edit_multiple_medication_group_medication_group_users_path(@medication_group.id),
-            class: "block mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors",
+            class: "block mt-2 px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
             data: { turbo_frame: "modal" } %>
           </div>
         </div>
@@ -43,7 +43,7 @@
     <div class="pt-2 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-4">
       <%= link_to "スケジュール追加",
       new_medication_group_medication_schedule_path(@medication_group),
-      class: "mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors",
+      class: "mt-2 px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
       data: { turbo_frame: "modal" } %>
     </div>
   </div>

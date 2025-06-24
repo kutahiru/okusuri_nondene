@@ -24,11 +24,11 @@
       <div class="flex items-center mt-4 gap-2 justify-end">
         <%= link_to "編集",
         edit_medication_group_path(medication_group.id),
-        class: "block mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors",
+        class: "block mt-2 px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
         data: { turbo_frame: "modal" } %>
         <%= link_to "履歴",
         medication_group_medication_managements_path(medication_group.id),
-        class: "block mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors",
+        class: "block mt-2 px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
         data: { turbo_frame: "_top" } %>
       </div>
     </div>
