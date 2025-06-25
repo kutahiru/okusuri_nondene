@@ -1,0 +1,68 @@
+<header class="bg-beige-500">
+  <nav data-controller="mobile-menu" class="border-b">
+    <div class="container px-6 py-6 mx-auto lg:flex lg:justify-between lg:items-center">
+      <div class="flex items-center justify-between">
+        <!-- ロゴやブランド名 -->
+        <div>
+          <%= link_to root_path, class: "text-xl font-bold text-dark-65" do %>
+            おくすり飲んでね
+          <% end %>
+        </div>
+        
+        <!-- ハンバーガーメニューボタン（モバイル用） -->
+        <div class="flex lg:hidden">
+          <button 
+            data-action="click->mobile-menu#toggle"
+            data-mobile-menu-target="button"
+            type="button" 
+            class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600 transition-colors duration-200" 
+            aria-label="メニューを開く"
+          >
+            <svg data-mobile-menu-target="openIcon" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M4 16h16" />
+            </svg>
+            <svg data-mobile-menu-target="closeIcon" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- ナビゲーションメニュー -->
+      <div 
+        data-mobile-menu-target="menu"
+        class="hidden absolute inset-x-0 z-20 w-full px-6 py-4 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg lg:bg-transparent lg:border-none lg:shadow-none lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:w-auto lg:block lg:opacity-100"
+      >
+        <div class="flex flex-col space-y-4 lg:flex-row lg:items-center lg:space-y-0 lg:space-x-8">
+          <%= link_to root_path, 
+            class: "block px-3 py-2 font-medium text-dark-65 rounded-md hover:text-gray-900 hover:bg-gray-100 lg:hover:bg-transparent lg:px-0 lg:py-0 transition-colors duration-200",
+            data: { action: "click->mobile-menu#closeOnMobile" } do %>
+            ホーム
+          <% end %>
+          
+          <%= link_to medication_groups_path, 
+            class: "block px-3 py-2 font-medium text-dark-65 rounded-md hover:text-gray-900 hover:bg-gray-100 lg:hover:bg-transparent lg:px-0 lg:py-0 transition-colors duration-200",
+            data: { action: "click->mobile-menu#closeOnMobile" } do %>
+            グループ
+          <% end %>
+
+          <% if current_user.present? %>
+            <%= button_to logout_path,
+              method: :delete,
+              class: "block w-full text-left px-3 py-2 font-medium text-dark-65 rounded-md hover:text-gray-900 hover:bg-gray-100 lg:hover:bg-transparent lg:px-0 lg:py-0 lg:w-auto transition-colors duration-200",
+              data: { action: "click->mobile-menu#closeOnMobile" } do %>
+              ログアウト
+            <% end %>
+          <% else %>
+            <%= button_to user_line_omniauth_authorize_path,
+              method: :post,
+              class: "block w-full text-left px-3 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 lg:bg-transparent lg:text-gray-700 lg:hover:text-gray-900 lg:hover:bg-transparent lg:px-0 lg:py-0 lg:w-auto transition-colors duration-200",
+              data: { turbo: false, action: "click->mobile-menu#closeOnMobile" } do %>
+              ログイン
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

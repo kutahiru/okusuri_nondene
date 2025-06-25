@@ -1,14 +1,38 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get "medication_managements/index"
+  root "home#top"
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  devise_for :users, controllers: {
+    sessions: "users/sessions",
+    omniauth_callbacks: "users/omniauth_callbacks"
+  }
 
-  # Render dynamic PWA files from app/views/pwa/*
-  get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  devise_scope :user do
+    delete "logout", to: "users/sessions#destroy", as: :logout
+  end
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  resources :medication_groups do
+    resources :medication_schedules, shallow: true
+    resources :medication_group_users, shallow: true do
+      collection do
+        get :edit_multiple
+        patch :update_multiple
+      end
+    end
+    resources :medication_group_invitations, shallow: true
+    resources :medication_managements, shallow: true
+  end
+
+  # 招待URL専用（トークンベース）
+  get "invite/:token", to: "medication_group_invitations#show", as: :medication_group_invitation_token
+  patch "invite/:token", to: "medication_group_invitations#accept", as: :accept_medication_group_invitation_token
+
+  if Rails.env.development?
+    require "sidekiq/web"
+    require "sidekiq-scheduler/web"
+    mount Sidekiq::Web => "/sidekiq"
+  end
+
+  # lineのWebhook
+  post "/callback", to: "line_bot#callback"
 end

@@ -1,0 +1,40 @@
+<section class="container px-6 mx-auto">
+  <h2 class="px-6 mt-2 text-4xl font-bold text-dark-65">おくすり履歴</h2>
+
+  <div class="mt-4 mb-2 flex items-center justify-center gap-4">
+    <%= link_to "< 前月",
+                medication_group_medication_managements_path(@medication_group,
+                  year: @target_date.prev_month.year,
+                  month: @target_date.prev_month.month),
+                class: "px-4 py-2 bg-sage-500 rounded-xl hover:bg-sage-600" %>
+
+    <h3 class="text-xl text-dark-65 font-semibold px-4">
+      <%= @target_date.strftime('%Y年%m月') %>
+    </h3>
+
+    <%= link_to "次月 >",
+                medication_group_medication_managements_path(@medication_group,
+                  year: @target_date.next_month.year,
+                  month: @target_date.next_month.month),
+                class: "px-4 py-2 bg-sage-500 rounded-xl hover:bg-sage-600" %>
+  </div>
+
+  <div class="px-6 py-2 grid grid-cols-1 gap-2 md:grid-cols-2">
+    <%# 左側15日まで %>
+    <div class="space-y-2">
+      <% @calendar_days.select { |day| day[:day] <= 15 }.each do |day_info| %>
+        <% day_medications = @medications_by_date[day_info[:date]] || [] %>
+        <%= render "calendar_day", day_info: day_info, day_medications: day_medications %>
+      <% end %>
+    </div>
+
+    <%# 右側16日以降 %>
+    <div class="space-y-2">
+      <% @calendar_days.select { |day| day[:day] > 15 }.each do |day_info| %>
+        <% day_medications = @medications_by_date[day_info[:date]] || [] %>
+        <%= render "calendar_day", day_info: day_info, day_medications: day_medications %>
+      <% end %>
+    </div>
+  </div>
+
+</section>

@@ -1,0 +1,58 @@
+<section class="container px-6 mx-auto">
+  <div class="max-w-md mx-auto mt-8">
+    <div class="px-6 py-8 bg-teal-100 rounded-3xl">
+      <div class="text-center">
+        <h2 class="text-4xl font-bold text-dark-65 mb-4">
+          <%= @medication_group.group_name %>グループへの招待
+        </h2>
+
+        <div class="space-y-4">
+          <%= form_with url: accept_medication_group_invitation_token_path(token: params[:token]), method: :patch, class: "space-y-4" do |form| %>
+            <div>
+              <label class="block text-dark-65 mb-2">
+                参加方法を選択してください
+              </label>
+              <div class="space-y-2 text-center">
+                <div class="inline-block text-left">
+                  <div class="flex items-center">
+                    <%= form.radio_button :user_type, 0, class: "mr-2" %>
+                    <%= form.label :user_type_0, "服薬者として参加", class: "text-dark-65" %>
+                  </div>
+                  <div class="flex items-center">
+                    <%= form.radio_button :user_type, 1, class: "mr-2" %>
+                    <%= form.label :user_type_1, "見守り家族として参加", class: "text-dark-65" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <% if user_signed_in? %>
+              <%# ログイン済の場合 %>
+              <div class="pt-4">
+                <%= form.submit "グループに参加する",
+                    class: "w-full px-4 py-3 bg-sage-500 rounded-xl hover:bg-sage-600 transition-colors" %>
+              </div>
+            <% end %>
+          <% end %>
+
+          <div class="pt-2">
+            <%= link_to "キャンセル", root_path,
+                class: "block w-full px-4 py-2 bg-sage-300 rounded-xl hover:bg-sage-400 transition-colors" %>
+          </div>
+          <% unless user_signed_in? %>
+            <%# 未ログインの場合 %>
+            <div class="">
+              <%= button_to "ログイン", user_line_omniauth_authorize_path,
+                method: :post,
+                class: "block w-full px-4 py-3 bg-sage-500 rounded-xl hover:bg-sage-600 transition-colors",
+                data: { turbo: false } %>
+              <label class="block text-dark-65 mb-2">
+                ※LINEログインが必要です。
+              </label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

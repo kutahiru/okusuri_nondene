@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  medication_group: one
+  medication_time: 2025-06-10 20:54:23
+  reminder_count: 1
+  reminder_interval: 1
+  family_notification_delay: 1
+
+two:
+  medication_group: two
+  medication_time: 2025-06-10 20:54:23
+  reminder_count: 1
+  reminder_interval: 1
+  family_notification_delay: 1

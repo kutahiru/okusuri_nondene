@@ -1,0 +1,56 @@
+<%= turbo_frame_tag medication_schedule do %>
+<div>
+  <div class="mt-2 bg-teal-100 rounded-3xl">
+    <div class="mx-6 py-4">
+      <h1 class="text-xl font-semibold text-dark-65">
+        <%= medication_schedule.title %>
+      </h1>
+
+      <div class="mt-2 ml-2 text-dark-65">
+        <div> 通知時間
+        </div>
+        <div class="ml-4">
+          <%= format_time_to_hour_minute(medication_schedule.medication_time) %>
+        </div>
+      </div>
+
+      <div class="mt-2 ml-2 text-dark-65">
+        <div>リマインド</div>
+        <div class="ml-4">
+          <%= medication_schedule.reminder_count %>回
+        </div>
+        <div class="mt-0.5 ml-4">
+          <%= medication_schedule.reminder_interval %>分間隔
+        </div>
+      </div>
+
+      <div class="mt-2 ml-2 text-dark-65">
+        <div> 家族通知タイミング</div>
+        <div class="ml-4">
+          <%= medication_schedule.family_notification_delay %>分後
+        </div>
+      </div>
+
+      <div class="flex items-center mt-4 gap-2 justify-end">
+        <div>
+          <%= link_to "編集",
+          edit_medication_schedule_path(medication_schedule.id),
+          class: "px-4 py-2 bg-sage-500 rounded-lg hover:bg-sage-600 transition-colors",
+          data: { turbo_frame: "modal" } %>
+        </div>
+        <div>
+          <%= link_to "削除",
+            medication_schedule_path(medication_schedule.id),
+            method: :delete,
+            class: "px-4 py-2 bg-beige-500 rounded-lg hover:bg-beige-600 transition-colors",
+            data: {
+              turbo_method: :delete,
+              turbo_confirm: "本当に#{medication_schedule.title}を削除しますか？"
+            }
+          %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
