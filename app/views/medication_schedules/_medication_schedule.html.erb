@@ -32,10 +32,23 @@
       </div>
 
       <div class="flex items-center mt-4 gap-2 justify-end">
-        <%= link_to "編集",
-        edit_medication_schedule_path(medication_schedule.id),
-        class: "block mt-2 px-4 py-2 bg-sage-500 rounded-xl text-center hover:bg-sage-600 transition-colors",
-        data: { turbo_frame: "modal" } %>
+        <div>
+          <%= link_to "編集",
+          edit_medication_schedule_path(medication_schedule.id),
+          class: "px-4 py-2 bg-sage-500 rounded-lg hover:bg-sage-600 transition-colors",
+          data: { turbo_frame: "modal" } %>
+        </div>
+        <div>
+          <%= link_to "削除",
+            medication_schedule_path(medication_schedule.id),
+            method: :delete,
+            class: "px-4 py-2 bg-beige-500 rounded-lg hover:bg-beige-600 transition-colors",
+            data: {
+              turbo_method: :delete,
+              turbo_confirm: "本当に#{medication_schedule.title}を削除しますか？"
+            }
+          %>
+        </div>
       </div>
     </div>
   </div>

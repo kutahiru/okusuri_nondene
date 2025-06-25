@@ -1,5 +1,5 @@
 class MedicationSchedulesController < ApplicationController
-  before_action :get_medication_schedule, only: %i[edit update]
+  before_action :get_medication_schedule, only: %i[edit update destroy]
   def new
     @medication_group = MedicationGroup.find(params[:medication_group_id])
     @medication_schedule = @medication_group.medication_schedules.build
@@ -26,6 +26,14 @@ class MedicationSchedulesController < ApplicationController
         partial: "medication_schedules/medication_schedule",
         locals: { medication_schedule: @medication_schedule }
       )
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @medication_schedule.destroy
+      render turbo_stream: turbo_stream.remove("medication_schedule_#{@medication_schedule.id}")
     else
       render :edit, status: :unprocessable_entity
     end

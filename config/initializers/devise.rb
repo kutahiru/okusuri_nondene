@@ -314,6 +314,9 @@ Devise.setup do |config|
   config.omniauth :line,
                 Rails.application.credentials.dig(:line, :channel_id),
                 Rails.application.credentials.dig(:line, :channel_secret),
-                scope: "profile openid bot_prompt",
-                bot_prompt: "normal"  # 友だち追加オプションを有効化
+                {
+                  scope: "profile openid",
+                  bot_prompt: "aggressive",  # 友だち追加オプションを有効化
+                  prompt: "consent"
+                }
 end

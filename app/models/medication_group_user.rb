@@ -32,4 +32,9 @@ class MedicationGroupUser < ApplicationRecord
     where(medication_group_id: medication_group_id, user_type: user_types[:medication_taker])
     .update_all(user_type: user_types[:family_watcher])
   end
+
+  # 指定したグループユーザーを服薬者に更新
+  def self.update_medication_taker!(medication_group_user_id)
+    find(medication_group_user_id).update!(user_type: user_types[:medication_taker])
+  end
 end

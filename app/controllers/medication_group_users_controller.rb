@@ -12,10 +12,10 @@ class MedicationGroupUsersController < ApplicationController
   def update_multiple
     medication_group_id = params[:medication_group_id]
 
-    params[:medication_group_users].each do |index, user_params|
-      medication_group_user = MedicationGroupUser.find(user_params[:id])
-      medication_group_user.update!(user_type: user_params[:user_type])
-    end
+    # 指定したグループユーザーを服薬者に更新
+    MedicationGroupUser.update_family_watcher_in_group!(medication_group_id)
+    selected_medication_group_user_id = medication_group_user_update_params[:selected_medication_group_user_id]
+    MedicationGroupUser.update_medication_taker!(selected_medication_group_user_id)
 
     # 更新後のデータを取得
     @medication_group_users = MedicationGroupUser.where(medication_group_id: medication_group_id).includes(:user).order("medication_group_users.user_type")
@@ -65,5 +65,9 @@ class MedicationGroupUsersController < ApplicationController
 
   def set_medication_group_user
     @medication_group_user = MedicationGroupUser.find(params[:id])
+  end
+
+  def medication_group_user_update_params
+    params.require(:medication_group_user).permit(:selected_medication_group_user_id)
   end
 end

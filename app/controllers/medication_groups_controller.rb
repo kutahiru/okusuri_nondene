@@ -1,6 +1,6 @@
 class MedicationGroupsController < ApplicationController
   before_action :get_medication_group_detail, only: %i[show]
-  before_action :get_medication_group, only: %i[edit update]
+  before_action :get_medication_group, only: %i[edit update destroy]
 
   def index
     @medication_groups = current_user.get_user_groups
@@ -37,6 +37,14 @@ class MedicationGroupsController < ApplicationController
       partial: "medication_groups/medication_group",
       locals: { medication_group: @medication_group }
     )
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @medication_group.destroy
+      render turbo_stream: turbo_stream.remove("medication_group_#{@medication_group.id}")
     else
       render :edit, status: :unprocessable_entity
     end
