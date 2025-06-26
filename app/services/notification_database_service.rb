@@ -13,7 +13,7 @@ class NotificationDatabaseService
       ,CURRENT_DATE + sch.medication_time + (sch.family_notification_delay * INTERVAL '1 minute') AS family_notification_date_time
       ,u.id AS user_id
       ,u.uid
-      ,gu.user_type --0:服薬者 1:見守り家族
+      ,gu.user_type --medication_taker:服薬者 family_watcher:見守り家族
       ,sch.medication_group_id
     FROM medication_schedules sch
     LEFT JOIN medication_managements ma ON

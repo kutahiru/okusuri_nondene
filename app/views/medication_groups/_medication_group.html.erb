@@ -9,7 +9,7 @@
       </h1>
 
       <div class="mt-2 ml-2">
-        <% medication_group.medication_group_users.order(:user_type).each do |group_user| %>
+        <% medication_group.medication_group_users.order(user_type: :desc).each do |group_user| %>
           <div class="flex justify-between">
           <p class="text-dark-65">
             <%= group_user.user.user_name %>

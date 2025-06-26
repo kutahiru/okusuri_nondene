@@ -1,6 +1,23 @@
 ja:
+  activerecord:
+    attributes:
+      reward_condition/condition_type:
+        weekly: "1週間連続"
+        daily_streak: "連続日数"
+      reward_condition/target_weekday:
+        sunday: "日曜日"
+        monday: "月曜日"
+        tuesday: "火曜日"
+        wednesday: "水曜日"
+        thursday: "木曜日"
+        friday: "金曜日"
+        saturday: "土曜日"
   enums:
     medication_group_user:
       user_type:
         medication_taker: "おくすり飲む人"
         family_watcher: "見守り家族"
+    reward_condition:
+      condition_type:
+        weekly: "1週間連続"
+        daily_streak: "連続日数"

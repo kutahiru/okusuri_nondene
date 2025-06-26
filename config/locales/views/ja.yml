@@ -1,0 +1,7 @@
+ja:
+  devise:
+    failure:
+      user:
+        unauthenticated : "ログインが必要です"
+    omniauth_callbacks:
+      success: "ログインしました"

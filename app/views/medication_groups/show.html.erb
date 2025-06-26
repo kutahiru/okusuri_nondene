@@ -46,5 +46,15 @@
       class: "mt-2 px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
       data: { turbo_frame: "modal" } %>
     </div>
+
+    <%# ご褒美部 %>
+    <div id="reward_condition" class="pt-2 grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-3 xl:grid-cols-4">
+      <% if @reward_condition.present? %>
+        <%= render @reward_condition %>
+      <% else %>
+        <%= render "reward_conditions/reward_condition_empty", medication_group: @medication_group %>
+      <% end %>
+    </div>
+
   </div>
 </section>

@@ -51,7 +51,7 @@ class LineNotificationService
     message_text = lines.join("\n")
 
     family_watchers.each do |family_watcher|
-       send_line_message(family_watcher.uid, message_text)
+       send_line_message(family_watcher.user.uid, message_text)
     end
   end
 

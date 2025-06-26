@@ -14,7 +14,7 @@ class MedicationGroupsController < ApplicationController
     @medication_group = MedicationGroup.create!(medication_group_update_param)
     @medication_group.medication_group_users.create!(
       user_id: current_user.id,
-      user_type: MedicationGroupUser.user_types[:medication_taker]
+      user_type: "medication_taker"
     )
 
     render turbo_stream: turbo_stream.prepend(
@@ -54,8 +54,9 @@ class MedicationGroupsController < ApplicationController
 
   def get_medication_group_detail
     @medication_group = current_user.medication_groups.find(params[:id])
-    @medication_group_users = @medication_group.medication_group_users.includes(:user).order("medication_group_users.user_type")
+    @medication_group_users = @medication_group.medication_group_users.includes(:user).order("medication_group_users.user_type DESC")
     @medication_schedules = @medication_group.medication_schedules # グループに紐づくスケジュールを取得
+    @reward_condition = @medication_group.reward_condition # グループに紐づくご褒美管理を取得
   rescue ActiveRecord::RecordNotFound
     redirect_to medication_groups_path, alert: "アクセス権限がないか、グループが存在しません。"
   end

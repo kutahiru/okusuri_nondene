@@ -15,12 +15,12 @@
               <div class="space-y-2 text-center">
                 <div class="inline-block text-left">
                   <div class="flex items-center">
-                    <%= form.radio_button :user_type, 0, class: "mr-2" %>
-                    <%= form.label :user_type_0, "服薬者として参加", class: "text-dark-65" %>
+                    <%= form.radio_button :user_type, "medication_taker", class: "mr-2" %>
+                    <%= form.label :user_type_medication_taker, "服薬者として参加", class: "text-dark-65" %>
                   </div>
                   <div class="flex items-center">
-                    <%= form.radio_button :user_type, 1, class: "mr-2" %>
-                    <%= form.label :user_type_1, "見守り家族として参加", class: "text-dark-65" %>
+                    <%= form.radio_button :user_type, "family_watcher", class: "mr-2" %>
+                    <%= form.label :user_type_family_watcher, "見守り家族として参加", class: "text-dark-65" %>
                   </div>
                 </div>
               </div>

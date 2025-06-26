@@ -3,8 +3,8 @@ class MedicationScheduleTarget
   include ActiveModel::Attributes
 
   USER_TYPES = {
-    medication_taker: 0,  # 服薬者
-    family_watcher: 1     # 見守り家族
+    medication_taker: "medication_taker", # 服薬者
+    family_watcher: "family_watcher" # 見守り家族
   }.freeze
 
   attribute :medication_schedule_id, :integer
@@ -14,14 +14,14 @@ class MedicationScheduleTarget
   attribute :family_notification_date_time, :datetime
   attribute :user_id, :integer
   attribute :uid, :string
-  attribute :user_type, :integer
+  attribute :user_type, :string
   attribute :medication_group_id, :integer
 
   def medication_taker?
-    user_type == USER_TYPES[:medication_taker]
+    user_type == "medication_taker"
   end
 
   def family_watcher?
-    user_type == USER_TYPES[:family_watcher]
+    user_type == "family_watcher"
   end
 end

@@ -1,5 +1,6 @@
 class MedicationGroupInvitationsController < ApplicationController
-  before_action :get_medication_group_invitation_by_token, only: %i[ show accept ]
+  skip_before_action :authenticate_user!, only: %i[show]
+  before_action :get_medication_group_invitation_by_token, only: %i[show accept]
 
   # 招待リンク作成
   def create
@@ -27,7 +28,7 @@ class MedicationGroupInvitationsController < ApplicationController
   def accept
     @medication_group_invitation.accept_invitation!(
       current_user.id,
-      medication_group_invitation_params[:user_type].to_i
+      medication_group_invitation_params[:user_type]
       )
 
     redirect_to medication_group_path(@medication_group_invitation.medication_group)

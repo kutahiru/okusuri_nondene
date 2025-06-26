@@ -1,12 +1,12 @@
 class MedicationGroupUsersController < ApplicationController
-  before_action :set_medication_group_user, only: [ :destroy ]
+  before_action :set_medication_group_user, only: %i[destroy]
 
   def new
     @medication_group_users = MedicationGroupUser.new
   end
 
   def edit_multiple
-    @medication_group_users = MedicationGroupUser.where(medication_group_id: params[:medication_group_id]).order(:id)
+    @medication_group_users = MedicationGroupUser.where(medication_group_id: params[:medication_group_id]).order(user_type: :desc)
   end
 
   def update_multiple
