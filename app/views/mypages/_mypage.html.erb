@@ -1,0 +1,18 @@
+<%= turbo_frame_tag user do %>
+<div>
+  <div class="mt-2 bg-teal-100 rounded-3xl">
+    <div class="mx-6 py-4">
+      <h1 class="text-xl font-semibold text-dark-65">
+        <%= user.user_name %>
+      </h1>
+
+      <div class="flex items-center mt-4 gap-2 justify-end">
+        <%= link_to "編集",
+          edit_mypage_path,
+          class: "block px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
+          data: { turbo_frame: "modal" } %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

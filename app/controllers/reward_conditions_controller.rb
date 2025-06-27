@@ -8,11 +8,13 @@ class RewardConditionsController < ApplicationController
   def create
     @reward_condition = @medication_group.create_reward_condition!(reward_condition_update_param)
 
-    render turbo_stream: turbo_stream.update(
+    render turbo_stream: [
+      turbo_stream.update(
       "reward_condition",
       partial: "reward_conditions/reward_condition",
-      locals: { reward_condition: @reward_condition }
-    )
+      locals: { reward_condition: @reward_condition }),
+      turbo_flash("success", "ご褒美設定を作成しました")
+    ]
   end
 
   def edit
@@ -20,11 +22,13 @@ class RewardConditionsController < ApplicationController
 
   def update
     if @reward_condition.update(reward_condition_update_param)
-      render turbo_stream: turbo_stream.replace(
-        @reward_condition,
-        partial: "reward_conditions/reward_condition",
-        locals: { reward_condition: @reward_condition }
-      )
+      render turbo_stream: [
+        turbo_stream.replace(
+          @reward_condition,
+          partial: "reward_conditions/reward_condition",
+          locals: { reward_condition: @reward_condition }),
+        turbo_flash("success", "ご褒美設定を更新しました")
+      ]
     else
       render :edit, status: :unprocessable_entity
     end
@@ -32,9 +36,12 @@ class RewardConditionsController < ApplicationController
 
   def destroy
     if @reward_condition.destroy
-      render turbo_stream: turbo_stream.update("reward_condition",
+      render turbo_stream: [
+        turbo_stream.update("reward_condition",
         partial: "reward_conditions/reward_condition_empty",
-        locals: { medication_group: @medication_group })
+        locals: { medication_group: @medication_group }),
+        turbo_flash("success", "ご褒美設定を削除しました")
+      ]
     else
       render :edit, status: :unprocessable_entity
     end

@@ -50,6 +50,17 @@
   --color-teal-800: #608a93;
   --color-teal-900: #52767f;
 
+  --color-cream-50: #fefdf8;
+  --color-cream-100: #fefbf1;
+  --color-cream-200: #fef8ea;
+  --color-cream-300: #fef5e3;
+  --color-cream-400: #fef2dc;
+  --color-cream-500: #FDF0BE;
+  --color-cream-600: #e1d5a8;
+  --color-cream-700: #c5bb92;
+  --color-cream-800: #a9a07c;
+  --color-cream-900: #8d8666;
+
   /* 基本のsans-serifフォントを上書き */
   --font-sans: "Zen Maru Gothic", "Hiragino Sans", "Yu Gothic", sans-serif;
 

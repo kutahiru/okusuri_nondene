@@ -4,14 +4,17 @@
 
 import { application } from "./application"
 
+import FlashController from "./flash_controller"
+application.register("flash", FlashController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
 import InvitationController from "./invitation_controller"
 application.register("invitation", InvitationController)
 
-import ModalController from "./modal_controller"
-application.register("modal", ModalController)
-
 import MobileMenuController from "./mobile_menu_controller"
 application.register("mobile-menu", MobileMenuController)
+
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)

@@ -1,5 +1,6 @@
 class MedicationSchedulesController < ApplicationController
   before_action :get_medication_schedule, only: %i[edit update destroy]
+
   def new
     @medication_group = MedicationGroup.find(params[:medication_group_id])
     @medication_schedule = @medication_group.medication_schedules.build
@@ -9,11 +10,13 @@ class MedicationSchedulesController < ApplicationController
     @medication_group = MedicationGroup.find(params[:medication_group_id])
     @medication_schedule = @medication_group.medication_schedules.create!(medication_schedule_update_param)
 
-    render turbo_stream: turbo_stream.append(
+    render turbo_stream: [
+      turbo_stream.append(
       "medication_schedules",
       partial: "medication_schedules/medication_schedule",
-      locals: { medication_schedule: @medication_schedule }
-    )
+      locals: { medication_schedule: @medication_schedule }),
+      turbo_flash("success", "スケジュールを作成しました")
+    ]
   end
 
   def edit
@@ -21,11 +24,13 @@ class MedicationSchedulesController < ApplicationController
 
   def update
     if @medication_schedule.update(medication_schedule_update_param)
-      render turbo_stream: turbo_stream.replace(
-        @medication_schedule,
-        partial: "medication_schedules/medication_schedule",
-        locals: { medication_schedule: @medication_schedule }
-      )
+      render turbo_stream: [
+        turbo_stream.replace(
+          @medication_schedule,
+          partial: "medication_schedules/medication_schedule",
+          locals: { medication_schedule: @medication_schedule }),
+        turbo_flash("success", "スケジュールを更新しました")
+      ]
     else
       render :edit, status: :unprocessable_entity
     end
@@ -33,7 +38,10 @@ class MedicationSchedulesController < ApplicationController
 
   def destroy
     if @medication_schedule.destroy
-      render turbo_stream: turbo_stream.remove("medication_schedule_#{@medication_schedule.id}")
+      render turbo_stream: [
+        turbo_stream.remove("medication_schedule_#{@medication_schedule.id}"),
+        turbo_flash("success", "スケジュールを削除しました")
+      ]
     else
       render :edit, status: :unprocessable_entity
     end

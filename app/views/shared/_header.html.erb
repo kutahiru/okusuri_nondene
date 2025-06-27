@@ -39,14 +39,19 @@
             data: { action: "click->mobile-menu#closeOnMobile" } do %>
             ホーム
           <% end %>
-          
-          <%= link_to medication_groups_path, 
+
+          <%= link_to medication_groups_path,
             class: "block px-3 py-2 font-medium text-dark-65 rounded-md hover:text-gray-900 hover:bg-gray-100 lg:hover:bg-transparent lg:px-0 lg:py-0 transition-colors duration-200",
             data: { action: "click->mobile-menu#closeOnMobile" } do %>
             グループ
           <% end %>
 
           <% if current_user.present? %>
+            <%= link_to mypage_path,
+              class: "block px-3 py-2 font-medium text-dark-65 rounded-md hover:text-gray-900 hover:bg-gray-100 lg:hover:bg-transparent lg:px-0 lg:py-0 transition-colors duration-200",
+              data: { action: "click->mobile-menu#closeOnMobile" } do %>
+              マイページ
+            <% end %>
             <%= button_to logout_path,
               method: :delete,
               class: "block w-full text-left px-3 py-2 font-medium text-dark-65 rounded-md hover:text-gray-900 hover:bg-gray-100 lg:hover:bg-transparent lg:px-0 lg:py-0 lg:w-auto transition-colors duration-200",

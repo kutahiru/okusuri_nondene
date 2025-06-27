@@ -32,8 +32,9 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
+  <body style="background-image: url('<%= asset_path('back_img5.png') %>'); background-size: cover; background-position: center; background-attachment: fixed;">
     <%= render "shared/header" %>
+    <div id="flash-container"></div>
     <%= render "shared/flash_message" %>
     <%= yield %>
     <%= turbo_frame_tag "modal" %>

@@ -17,11 +17,13 @@ class MedicationGroupsController < ApplicationController
       user_type: "medication_taker"
     )
 
-    render turbo_stream: turbo_stream.prepend(
+    render turbo_stream: [
+      turbo_stream.prepend(
       "medication_groups",
       partial: "medication_groups/medication_group",
       locals: { medication_group: @medication_group }
-    )
+    ),
+      turbo_flash("success", "グループを作成しました") ]
   end
 
   def show
@@ -32,11 +34,14 @@ class MedicationGroupsController < ApplicationController
 
   def update
     if @medication_group.update(medication_group_update_param)
-    render turbo_stream: turbo_stream.replace(
-      @medication_group,
-      partial: "medication_groups/medication_group",
-      locals: { medication_group: @medication_group }
-    )
+      render turbo_stream: [
+        turbo_stream.replace(
+          @medication_group,
+          partial: "medication_groups/medication_group",
+          locals: { medication_group: @medication_group }
+        ),
+        turbo_flash("success", "グループを更新しました")
+      ]
     else
       render :edit, status: :unprocessable_entity
     end
@@ -44,7 +49,10 @@ class MedicationGroupsController < ApplicationController
 
   def destroy
     if @medication_group.destroy
-      render turbo_stream: turbo_stream.remove("medication_group_#{@medication_group.id}")
+      render turbo_stream: [
+        turbo_stream.remove("medication_group_#{@medication_group.id}"),
+        turbo_flash("success", "グループを削除しました")
+      ]
     else
       render :edit, status: :unprocessable_entity
     end
@@ -58,11 +66,16 @@ class MedicationGroupsController < ApplicationController
     @medication_schedules = @medication_group.medication_schedules # グループに紐づくスケジュールを取得
     @reward_condition = @medication_group.reward_condition # グループに紐づくご褒美管理を取得
   rescue ActiveRecord::RecordNotFound
-    redirect_to medication_groups_path, alert: "アクセス権限がないか、グループが存在しません。"
+    render turbo_stream: [
+      turbo_flash("alert", "アクセス権限がないか、グループが存在しません。")
+    ]
+    # redirect_to medication_groups_path, alert: "アクセス権限がないか、グループが存在しません。"
   end
 
   def get_medication_group
     @medication_group = current_user.medication_groups.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to medication_groups_path, alert: "アクセス権限がないか、グループが存在しません。"
   end
 
   def medication_group_update_param

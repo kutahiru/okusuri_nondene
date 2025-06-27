@@ -21,14 +21,16 @@ class MedicationGroupUsersController < ApplicationController
     @medication_group_users = MedicationGroupUser.where(medication_group_id: medication_group_id).includes(:user).order("medication_group_users.user_type")
 
     respond_to do |format|
-      format.html { redirect_to medication_group_path(medication_group_id), notice: "メンバーのロールを更新しました。" }
+      format.html { redirect_to medication_group_path(medication_group_id), notice: "メンバーを更新しました。" }
       format.turbo_stream {
-        render turbo_stream: turbo_stream.update(
+        render turbo_stream: [
+          turbo_stream.update(
           "medication_group_users",
           partial: "medication_group_users/medication_group_user",
           collection: @medication_group_users,
-          as: :medication_group_user
-        )
+          as: :medication_group_user),
+        turbo_flash("success", "メンバーを更新しました")
+        ]
       }
     end
   rescue StandardError => e
@@ -55,7 +57,8 @@ class MedicationGroupUsersController < ApplicationController
             collection: @medication_group_users,
             as: :medication_group_user
           ),
-          turbo_stream.update("modal", "")
+          turbo_stream.update("modal", ""),
+          turbo_flash("success", "メンバーを削除しました")
         ]
       }
     end

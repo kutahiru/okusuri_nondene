@@ -1,3 +1,7 @@
-<div class="container mx-auto px-4" data-turbo-temporary data-controller="flash" data-flash-auto-hide-value="true" data-flash-hide-delay-value="5000">
-  <div data-flash-target="messageContainer" style="display: none;"></div>
-</div>
+<%# Deviceのエラー用 %>
+<% if flash.any? %>
+  <% flash.each do |message_type, message| %>
+    <%= render 'shared/flash_message_item', message_type: message_type, message: message %>
+  <% end %>
+  <% flash.clear %>
+<% end %>

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "medication_managements/index"
   root "home#top"
 
   devise_for :users, controllers: {
@@ -10,6 +9,8 @@ Rails.application.routes.draw do
   devise_scope :user do
     delete "logout", to: "users/sessions#destroy", as: :logout
   end
+
+  resource :mypage, only: [ :show, :edit, :update, :destroy ]
 
   resources :medication_groups do
     resources :medication_schedules, shallow: true, only: %i[new create edit update destroy]
