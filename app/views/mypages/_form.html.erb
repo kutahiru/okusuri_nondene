@@ -3,31 +3,39 @@
   ) do |form| %>
 
   <%# 名前 %>
-  <div class="mb-4">
-    <%= form.label :user_name, "名前", class: "block text-md font-medium text-gray-700 mb-2" %>
-    <%= form.text_field :user_name, class: "mt-1 block rounded-md w-full border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 font-semibold text-lg" %>
-
+  <div class="mb-6">
+    <%= form.label :user_name, "名前", class: "block text-sm font-semibold text-gray-700 mb-3" %>
+    <div class="relative">
+      <%= form.text_field :user_name, 
+          class: "w-full pl-4 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-200 text-gray-900 placeholder-gray-500 font-medium",
+          placeholder: "名前を入力してください" %>
+    </div>
     <%# エラーメッセージ表示 %>
     <% if user.errors[:user_name].any? %>
-      <div class="mt-1 text-sm text-red-600">
+      <div class="mt-2 flex items-center text-sm text-red-600">
+        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
         <%= user.errors[:user_name].first %>
       </div>
     <% end %>
   </div>
 
   <%# 送信ボタン %>
-  <div class="flex justify-end space-x-3 pt-4">
-
-    <%# 送信ボタン %>
-    <%= form.submit "更新",
-        class: "px-4 py-2 text-sm font-medium text-gray-700 bg-sage-500 border border-transparent rounded-md hover:bg-sage-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
-
+  <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-6">
     <%# キャンセルボタン %>
     <button type="button"
             data-action="click->modal#hide"
-            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+            class="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200 shadow-sm hover:shadow-md">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
       キャンセル
     </button>
+
+    <%# 送信ボタン %>
+    <%= form.submit "更新",
+        class: "inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]" %>
   </div>
 
 <% end %>

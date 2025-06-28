@@ -91,18 +91,20 @@
   </div>
 
   <%# 送信ボタン %>
-  <div class="flex justify-end space-x-3 pt-4">
-
-    <%# 送信ボタン %>
-    <%= form.submit reward_condition.persisted? ? "更新" : "作成",
-        class: "px-4 py-2 text-sm font-medium text-gray-700 bg-sage-500 border border-transparent rounded-md hover:bg-sage-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors" %>
-
+  <div class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-6">
     <%# キャンセルボタン %>
     <button type="button"
             data-action="click->modal#hide"
-            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+            class="inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200 shadow-sm hover:shadow-md">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
       キャンセル
     </button>
+
+    <%# 送信ボタン %>
+    <%= form.submit reward_condition.persisted? ? "更新" : "作成",
+        class: "inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-teal-500 to-teal-600 rounded-lg hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]" %>
   </div>
 
 <% end %>

@@ -1,39 +1,52 @@
 <%= turbo_frame_tag medication_group do %>
-<div>
+<div class="group">
 <%= link_to medication_group_path(medication_group.id),
   data: { turbo_frame: "_top" } do %>
-  <div class="mt-2 bg-teal-100 rounded-3xl">
-    <div class="mx-6 py-4">
-      <h1 class="text-xl font-semibold text-dark-65">
-        <%= medication_group.group_name %>
-      </h1>
+  <div class="relative overflow-hidden bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300 group-hover:scale-[1.02]">
+    <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-teal-400/20 to-teal-500/20 rounded-bl-full"></div>
+    <div class="p-6">
+      <div class="flex items-start justify-between mb-4">
+        <h2 class="text-xl font-bold text-gray-800 group-hover:text-teal-600 transition-colors">
+          <%= medication_group.group_name %>
+        </h2>
+        <div class="flex items-center space-x-1">
+          <div class="w-2 h-2 bg-teal-400 rounded-full"></div>
+          <div class="w-2 h-2 bg-teal-300 rounded-full"></div>
+          <div class="w-2 h-2 bg-teal-200 rounded-full"></div>
+        </div>
+      </div>
 
-      <div class="mt-2 ml-2">
+      <div class="space-y-3 mb-6">
         <% medication_group.medication_group_users.order(user_type: :desc).each do |group_user| %>
-          <div class="flex justify-between">
-          <p class="text-dark-65">
-            <%= group_user.user.user_name %>
-          </p>
-          <p class="text-dark-65">
-            <%= group_user.user_type_i18n  %>
-          </p>
+          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-gradient-to-r from-teal-400 to-teal-500 rounded-full flex items-center justify-center">
+                <span class="text-white text-sm font-medium"><%= group_user.user.user_name.first %></span>
+              </div>
+              <span class="font-medium text-gray-700">
+                <%= group_user.user.user_name %>
+              </span>
+            </div>
+            <span class="px-3 py-1 text-xs font-medium text-teal-700 bg-teal-100 rounded-full">
+              <%= group_user.user_type_i18n %>
+            </span>
           </div>
         <% end %>
       </div>
 
-      <div class="flex items-center mt-4 gap-2 justify-end">
+      <div class="flex items-center gap-3 justify-end">
         <%= link_to "編集",
         edit_medication_group_path(medication_group.id),
-        class: "block px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
+        class: "inline-flex items-center px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-lg transition-all duration-200 hover:shadow-sm",
         data: { turbo_frame: "modal" } %>
         <%= link_to "履歴",
         medication_group_medication_managements_path(medication_group.id),
-        class: "block px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
+        class: "inline-flex items-center px-4 py-2 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-all duration-200 hover:shadow-sm",
         data: { turbo_frame: "_top" } %>
         <%= link_to "削除",
           medication_group_path(medication_group.id),
           method: :delete,
-          class: "block px-4 py-2 bg-beige-500 rounded-lg hover:bg-beige-600 transition-colors",
+          class: "inline-flex items-center px-4 py-2 text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-all duration-200 hover:shadow-sm",
           data: {
             turbo_method: :delete,
             turbo_confirm: "本当に#{medication_group.group_name}を削除しますか？"
