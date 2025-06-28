@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  validates :user_name, presence: true, length: { maximum: 255 }
+  validates :user_name, presence: true, length: { maximum: 20 }
   validates :provider, presence: true
   validates :uid, presence: true
   validates :provider, uniqueness: { scope: :uid }

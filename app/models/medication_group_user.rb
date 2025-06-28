@@ -11,6 +11,16 @@ class MedicationGroupUser < ApplicationRecord
 
   validates :user_type, presence: true
   validates :user_id, uniqueness: { scope: :medication_group_id }
+  validate :check_user_group_maximum
+
+  # medication_takerのみ同一グループに1つまでの制約
+  validates :user_type, uniqueness: {
+    scope: :medication_group_id,
+    message: "は同じグループ内で重複できません"
+  }, if: :medication_taker?
+
+  # 定数
+  MAX_GROUPS_PER_USER = 3
 
   # 服薬グループにユーザー追加
   def self.add_user_to_group!(medication_group_id, user_id, user_type)
@@ -36,5 +46,15 @@ class MedicationGroupUser < ApplicationRecord
   # 指定したグループユーザーを服薬者に更新
   def self.update_medication_taker!(medication_group_user_id)
     find(medication_group_user_id).update!(user_type: "medication_taker")
+  end
+
+  def check_user_group_maximum
+    count= MedicationGroupUser.where(user_id: user_id)
+      .where.not(id: id)
+      .count()
+
+    if count >= MAX_GROUPS_PER_USER
+      errors.add(:user_id, "1人のユーザーが参加できるグループは#{MAX_GROUPS_PER_USER}つまでです")
+    end
   end
 end

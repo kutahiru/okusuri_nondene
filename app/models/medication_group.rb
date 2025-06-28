@@ -1,5 +1,5 @@
 class MedicationGroup < ApplicationRecord
-  validates :group_name, presence: true, length: { maximum: 255 }
+  validates :group_name, presence: true, length: { maximum: 20 }
 
   has_many :medication_group_users, dependent: :destroy
   has_many :users, through: :medication_group_users

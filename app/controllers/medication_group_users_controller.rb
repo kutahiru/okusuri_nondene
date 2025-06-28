@@ -18,7 +18,7 @@ class MedicationGroupUsersController < ApplicationController
     MedicationGroupUser.update_medication_taker!(selected_medication_group_user_id)
 
     # 更新後のデータを取得
-    @medication_group_users = MedicationGroupUser.where(medication_group_id: medication_group_id).includes(:user).order("medication_group_users.user_type")
+    @medication_group_users = MedicationGroupUser.where(medication_group_id: medication_group_id).includes(:user).order("medication_group_users.user_type desc")
 
     respond_to do |format|
       format.html { redirect_to medication_group_path(medication_group_id), notice: "メンバーを更新しました。" }
@@ -71,6 +71,6 @@ class MedicationGroupUsersController < ApplicationController
   end
 
   def medication_group_user_update_params
-    params.require(:medication_group_user).permit(:selected_medication_group_user_id)
+    params.permit(:selected_medication_group_user_id)
   end
 end
