@@ -8,4 +8,16 @@ class MedicationGroup < ApplicationRecord
   has_many :reward_histories, dependent: :destroy
   has_many :medication_group_invitations, dependent: :destroy
   has_many :medication_managements, dependent: :destroy
+
+  # グループの新規登録、ユーザーも服薬者として追加
+  def self.create_group_with_user!(medication_group_update_param, user_id)
+    transaction do
+      group = create!(medication_group_update_param)
+      group.medication_group_users.create!(
+        user_id: user_id,
+        user_type: "medication_taker"
+      )
+      group
+    end
+  end
 end

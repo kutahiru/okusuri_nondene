@@ -48,13 +48,14 @@ class MedicationGroupUser < ApplicationRecord
     find(medication_group_user_id).update!(user_type: "medication_taker")
   end
 
+  # 最大数チェック
   def check_user_group_maximum
     count= MedicationGroupUser.where(user_id: user_id)
       .where.not(id: id)
       .count()
 
     if count >= MAX_GROUPS_PER_USER
-      errors.add(:user_id, "1人のユーザーが参加できるグループは#{MAX_GROUPS_PER_USER}つまでです")
+      errors.add(:base, "ユーザーが参加できるグループは#{MAX_GROUPS_PER_USER}つまでです")
     end
   end
 end

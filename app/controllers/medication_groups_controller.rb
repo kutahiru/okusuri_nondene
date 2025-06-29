@@ -11,19 +11,33 @@ class MedicationGroupsController < ApplicationController
   end
 
   def create
-    @medication_group = MedicationGroup.create!(medication_group_update_param)
-    @medication_group.medication_group_users.create!(
-      user_id: current_user.id,
-      user_type: "medication_taker"
-    )
+    begin
+      @medication_group = MedicationGroup.create_group_with_user!(medication_group_update_param, current_user.id)
 
-    render turbo_stream: [
-      turbo_stream.prepend(
-      "medication_groups",
-      partial: "medication_groups/medication_group",
-      locals: { medication_group: @medication_group }
-    ),
+      render turbo_stream: [
+        turbo_stream.prepend(
+        "medication_groups",
+        partial: "medication_groups/medication_group",
+        locals: { medication_group: @medication_group }
+      ),
       turbo_flash("success", "グループを作成しました") ]
+    rescue ActiveRecord::RecordInvalid => e
+      if e.record.is_a?(MedicationGroup)
+        # MedicationGroupのバリデーションエラーの場合、元のエラーを保持
+        @medication_group = e.record
+      else
+        # MedicationGroupUserのバリデーションエラーの場合、新しいインスタンスに:baseエラーを追加
+        @medication_group = MedicationGroup.new(medication_group_update_param)
+        error_message = extract_user_friendly_message(e.message)
+        @medication_group.errors.add(:base, error_message)
+      end
+
+      render turbo_stream: turbo_stream.update(
+        "modal",
+        template: "medication_groups/new",
+        locals: { medication_group: @medication_group }
+      ), status: :unprocessable_entity
+    end
   end
 
   def show
@@ -43,7 +57,11 @@ class MedicationGroupsController < ApplicationController
         turbo_flash("success", "グループを更新しました")
       ]
     else
-      render :edit, status: :unprocessable_entity
+      render turbo_stream: turbo_stream.update(
+        "modal",
+        template: "medication_groups/edit",
+        locals: { medication_group: @medication_group }
+      ), status: :unprocessable_entity
     end
   end
 
@@ -54,7 +72,10 @@ class MedicationGroupsController < ApplicationController
         turbo_flash("success", "グループを削除しました")
       ]
     else
-      render :edit, status: :unprocessable_entity
+      error_message = @medication_group.errors.any? ?
+                     @medication_group.errors.full_messages.join(", ") :
+                     "削除に失敗しました"
+      render turbo_stream: turbo_flash("error", error_message)
     end
   end
 
@@ -80,5 +101,9 @@ class MedicationGroupsController < ApplicationController
 
   def medication_group_update_param
     params.require(:medication_group).permit(:group_name)
+  end
+
+  def extract_user_friendly_message(error_message)
+    error_message.gsub(/^バリデーションに失敗しました:\s*/, "")
   end
 end

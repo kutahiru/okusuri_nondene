@@ -8,15 +8,34 @@ class MedicationSchedulesController < ApplicationController
 
   def create
     @medication_group = MedicationGroup.find(params[:medication_group_id])
-    @medication_schedule = @medication_group.medication_schedules.create!(medication_schedule_update_param)
 
-    render turbo_stream: [
-      turbo_stream.append(
-      "medication_schedules",
-      partial: "medication_schedules/medication_schedule",
-      locals: { medication_schedule: @medication_schedule }),
-      turbo_flash("success", "スケジュールを作成しました")
-    ]
+    # サーバー側でもセキュリティチェック
+    if maximum_message = MedicationSchedule.check_medication_schedule_maximum(params[:medication_group_id])
+      @medication_schedule = @medication_group.medication_schedules.build(medication_schedule_update_param)
+      @medication_schedule.errors.add(:base, maximum_message)
+      render turbo_stream: turbo_stream.update(
+        "modal",
+        template: "medication_schedules/new",
+        locals: { medication_schedule: @medication_schedule }
+      ), status: :unprocessable_entity
+      return
+    end
+
+    if @medication_schedule = @medication_group.medication_schedules.create(medication_schedule_update_param)
+      render turbo_stream: [
+        turbo_stream.append(
+        "medication_schedules",
+        partial: "medication_schedules/medication_schedule",
+        locals: { medication_schedule: @medication_schedule }),
+        turbo_flash("success", "スケジュールを作成しました")
+      ]
+    else
+      render turbo_stream: turbo_stream.update(
+        "modal",
+        template: "medication_schedules/new",
+        locals: { medication_schedule: @medication_schedule }
+      ), status: :unprocessable_entity
+    end
   end
 
   def edit
