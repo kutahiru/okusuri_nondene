@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ChatAnimationController from "./chat_animation_controller"
+application.register("chat-animation", ChatAnimationController)
+
 import FlashController from "./flash_controller"
 application.register("flash", FlashController)
 

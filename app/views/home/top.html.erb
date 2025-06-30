@@ -2,7 +2,7 @@
   <div class="container mx-auto px-6">
     <div class="max-w-2xl mx-auto">
       <div class="space-y-6">
-        <div class="flex items-start space-x-3">
+        <div class="flex items-start space-x-3 opacity-0 translate-y-4" data-chat-animation-target="message" data-delay="0">
           <div class="flex-1">
             <div class="bg-white rounded-2xl px-6 py-4 shadow-sm border border-gray-100 inline-block">
               <p class="text-gray-800 font-medium">おくすり飲んだ？</p>
@@ -14,7 +14,7 @@
           </div>
         </div>
 
-        <div class="flex items-start space-x-3 flex-row-reverse">
+        <div class="flex items-start space-x-3 flex-row-reverse opacity-0 translate-y-4" data-chat-animation-target="message" data-delay="3000">
           <div class="flex-1 flex justify-end">
             <div class="bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl px-6 py-4 text-white inline-block">
               <p class="font-medium">うん。<br>今から飲むところ。</p>
@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <div class="flex items-start space-x-3">
+        <div class="flex items-start space-x-3 opacity-0 translate-y-4" data-chat-animation-target="message" data-delay="6000">
           <div class="flex-1">
             <div class="bg-white rounded-2xl px-6 py-4 shadow-sm border border-gray-100 inline-block">
               <p class="text-gray-800 font-medium">毎日は大変だよね。<br>でも、ずっと元気でいて欲しいから。<br>おくすり飲んでね。</p>
@@ -50,7 +50,7 @@
       </div>
 
       <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-        <span class="text-teal-600">おくすり</span>飲んでね
+        <span class="text-teal-600 animate-pulse">おくすり</span>飲んでね
       </h1>
 
       <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -93,14 +93,14 @@
     </div>
 
     <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl p-8 border border-teal-200">
+      <div class="bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl p-8 border border-teal-200 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
         <h3 class="text-xl font-bold text-teal-900 mb-4">複数人指定可能な通知機能</h3>
         <p class="text-teal-800 leading-relaxed">
           おくすりを飲む本人はもちろん、家族に対しても通知設定が可能です。飲み終わったことも通知します。
         </p>
       </div>
 
-      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200">
+      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
         <h3 class="text-xl font-bold text-blue-900 mb-4">飲み続けるためのご褒美設定機能</h3>
         <p class="text-blue-800 leading-relaxed">
           モチベーション維持のために、ご褒美の設定が可能です。継続しておくすりを飲むことをサポートします。
