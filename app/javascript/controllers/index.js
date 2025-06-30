@@ -18,3 +18,6 @@ application.register("mobile-menu", MobileMenuController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
+
+import RewardConditionFormController from "./reward_condition_form_controller"
+application.register("reward-condition-form", RewardConditionFormController)

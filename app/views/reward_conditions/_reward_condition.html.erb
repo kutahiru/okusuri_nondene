@@ -19,23 +19,25 @@
           </div>
         </div>
 
-        <div class="bg-gray-50 rounded-lg p-3">
-          <div class="flex items-center mb-2">
-            <span class="text-sm font-medium text-gray-700">曜日</span>
+        <% if reward_condition.condition_weekly? %>
+          <div class="bg-gray-50 rounded-lg p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-sm font-medium text-gray-700">曜日</span>
+            </div>
+            <div class="text-gray-900 font-semibold">
+              <%= RewardCondition.human_attribute_name("target_weekday.#{reward_condition.target_weekday}") %>
+            </div>
           </div>
-          <div class="text-gray-900 font-semibold">
-            <%= RewardCondition.human_attribute_name("target_weekday.#{reward_condition.target_weekday}") %>
+        <% elsif reward_condition.condition_daily_streak? %>
+          <div class="bg-gray-50 rounded-lg p-3">
+            <div class="flex items-center mb-2">
+              <span class="text-sm font-medium text-gray-700">連続日数</span>
+            </div>
+            <div class="text-gray-900 font-semibold">
+              <%= reward_condition.target_value %>日間
+            </div>
           </div>
-        </div>
-
-        <div class="bg-gray-50 rounded-lg p-3">
-          <div class="flex items-center mb-2">
-            <span class="text-sm font-medium text-gray-700">連続日数</span>
-          </div>
-          <div class="text-gray-900 font-semibold">
-            <%= reward_condition.target_value %>日間
-          </div>
-        </div>
+        <% end %>
       </div>
 
       <div class="flex items-center gap-3 justify-end">

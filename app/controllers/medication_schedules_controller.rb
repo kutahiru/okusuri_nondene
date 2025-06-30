@@ -22,11 +22,17 @@ class MedicationSchedulesController < ApplicationController
     end
 
     if @medication_schedule = @medication_group.medication_schedules.create(medication_schedule_update_param)
+      # 最新のスケジュール一覧を取得してボタン状態を更新
+      @medication_schedules = @medication_group.medication_schedules
       render turbo_stream: [
         turbo_stream.append(
         "medication_schedules",
         partial: "medication_schedules/medication_schedule",
         locals: { medication_schedule: @medication_schedule }),
+        turbo_stream.replace(
+        "schedule_add_button",
+        partial: "medication_schedules/add_button",
+        locals: { medication_group: @medication_group, medication_schedules: @medication_schedules }),
         turbo_flash("success", "スケジュールを作成しました")
       ]
     else
@@ -57,8 +63,15 @@ class MedicationSchedulesController < ApplicationController
 
   def destroy
     if @medication_schedule.destroy
+      # 削除後の最新のスケジュール一覧を取得してボタン状態を更新
+      @medication_group = @medication_schedule.medication_group
+      @medication_schedules = @medication_group.medication_schedules
       render turbo_stream: [
         turbo_stream.remove("medication_schedule_#{@medication_schedule.id}"),
+        turbo_stream.replace(
+        "schedule_add_button",
+        partial: "medication_schedules/add_button",
+        locals: { medication_group: @medication_group, medication_schedules: @medication_schedules }),
         turbo_flash("success", "スケジュールを削除しました")
       ]
     else

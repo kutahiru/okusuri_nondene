@@ -5,7 +5,9 @@
   <%# タイトル %>
   <div class="mb-4">
     <%= form.label :title, "タイトル", class: "block text-md font-medium text-gray-700 mb-2" %>
-    <%= form.text_field :title, class: "mt-1 block md:w-1/2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 font-semibold text-lg", placeholder: "朝のおくすり" %>
+    <%= form.text_field :title, class: "w-full pl-4 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-200 text-gray-900 placeholder-gray-500 font-bold",
+      placeholder: "朝のおくすり",
+      maxlength: 20 %>
     <%# エラーメッセージ表示 %>
     <% if medication_schedule.errors[:title].any? %>
       <div class="mt-1 text-sm text-red-600">
@@ -28,9 +30,6 @@
                 class: "px-3 py-2 text-lg font-semibold border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors bg-white appearance-none #{'border-red-300 focus:ring-red-500 focus:border-red-500' if medication_schedule.errors[:medication_time].any?}"
               } %>
       </div>
-      <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
     </div>
     <%# エラーメッセージ表示 %>
     <% if medication_schedule.errors[:medication_time].any? %>
