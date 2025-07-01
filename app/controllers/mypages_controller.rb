@@ -1,5 +1,5 @@
 class MypagesController < ApplicationController
-  before_action :get_user, only: %i[edit update]
+  before_action :set_user, only: %i[edit update]
   def show
   end
 
@@ -26,7 +26,7 @@ class MypagesController < ApplicationController
 
   private
 
-  def get_user
+  def set_user
     @user = User.find(current_user.id)
   end
 

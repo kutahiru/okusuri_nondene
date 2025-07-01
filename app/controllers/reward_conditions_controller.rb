@@ -1,14 +1,14 @@
 class RewardConditionsController < ApplicationController
-  before_action :get_reward_condition, only: %i[edit update destroy]
-  before_action :get_medication_group, only: %i[new create]
+  before_action :set_reward_condition, only: %i[edit update destroy]
+  before_action :set_medication_group, only: %i[new create]
   def new
     @reward_condition = @medication_group.build_reward_condition
   end
 
   def create
-    @reward_condition = @medication_group.create_reward_condition(reward_condition_update_param)
+    @reward_condition = @medication_group.build_reward_condition(reward_condition_update_param)
 
-    if @reward_condition.persisted?
+    if @reward_condition.save
       render turbo_stream: [
         turbo_stream.update(
         "reward_condition",
@@ -64,12 +64,12 @@ class RewardConditionsController < ApplicationController
 
   private
 
-  def get_reward_condition
+  def set_reward_condition
     @reward_condition = current_user.reward_conditions.find(params[:id])
     @medication_group = @reward_condition.medication_group
   end
 
-  def get_medication_group
+  def set_medication_group
     @medication_group = current_user.medication_groups.find(params[:medication_group_id])
   end
 

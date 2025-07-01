@@ -1,6 +1,6 @@
 class MedicationGroupInvitationsController < ApplicationController
   skip_before_action :authenticate_user!, only: %i[show]
-  before_action :get_medication_group_invitation_by_token, only: %i[show accept]
+  before_action :set_medication_group_invitation_by_token, only: %i[show accept]
 
   # 招待リンク作成
   def create
@@ -37,7 +37,7 @@ class MedicationGroupInvitationsController < ApplicationController
   private
 
   # トークンを使って招待レコードを取得
-  def get_medication_group_invitation_by_token
+  def set_medication_group_invitation_by_token
     @medication_group_invitation = MedicationGroupInvitation.find_by_token(params[:token])
   end
 

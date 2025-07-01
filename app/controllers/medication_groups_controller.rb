@@ -1,9 +1,12 @@
 class MedicationGroupsController < ApplicationController
-  before_action :get_medication_group_detail, only: %i[show]
-  before_action :get_medication_group, only: %i[edit update destroy]
+  before_action :set_medication_group_detail, only: %i[show]
+  before_action :set_medication_group, only: %i[edit update destroy]
 
   def index
     @medication_groups = current_user.get_user_groups
+  end
+
+  def show
   end
 
   def new
@@ -38,9 +41,6 @@ class MedicationGroupsController < ApplicationController
         locals: { medication_group: @medication_group }
       ), status: :unprocessable_entity
     end
-  end
-
-  def show
   end
 
   def edit
@@ -81,7 +81,7 @@ class MedicationGroupsController < ApplicationController
 
   private
 
-  def get_medication_group_detail
+  def set_medication_group_detail
     @medication_group = current_user.medication_groups.find(params[:id])
     @medication_group_users = @medication_group.medication_group_users.includes(:user).order("medication_group_users.user_type DESC")
     @medication_schedules = @medication_group.medication_schedules # グループに紐づくスケジュールを取得
@@ -90,10 +90,9 @@ class MedicationGroupsController < ApplicationController
     render turbo_stream: [
       turbo_flash("alert", "アクセス権限がないか、グループが存在しません。")
     ]
-    # redirect_to medication_groups_path, alert: "アクセス権限がないか、グループが存在しません。"
   end
 
-  def get_medication_group
+  def set_medication_group
     @medication_group = current_user.medication_groups.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to medication_groups_path, alert: "アクセス権限がないか、グループが存在しません。"

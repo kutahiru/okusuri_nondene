@@ -51,6 +51,14 @@ class MedicationGroupUser < ApplicationRecord
     find(medication_group_user_id).update!(user_type: "medication_taker")
   end
 
+  # グループ内の服薬者を変更（トランザクション付き）
+  def self.update_medication_taker_in_group!(group_id, selected_user_id)
+    transaction do
+      update_family_watcher_in_group!(group_id)
+      update_medication_taker!(selected_user_id)
+    end
+  end
+
   # 参加可能なグループ数のチェック
   def validate_user_group_limit
     count= MedicationGroupUser.where(user_id: user_id)
