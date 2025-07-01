@@ -46,7 +46,8 @@
   <div class="space-y-3">
     <!-- カード式の選択肢 -->
     <div class="grid grid-cols-4 gap-2">
-      <% [0, 1, 2, 3].each do |count| %>
+      <%# <% [0, 1, 2, 3].each do |count| %>
+      <% [0, 1].each do |count| %>
         <label class="relative cursor-pointer">
           <%= form.radio_button :reminder_count, count, 
                 class: "sr-only peer" %>

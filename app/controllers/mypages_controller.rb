@@ -7,7 +7,7 @@ class MypagesController < ApplicationController
   end
 
   def update
-    if @user.update!(user_update_params)
+    if @user.update(user_update_params)
       render turbo_stream: [
         turbo_stream.replace(
           @user,
@@ -16,7 +16,11 @@ class MypagesController < ApplicationController
         turbo_flash("success", "ユーザーを更新しました")
       ]
     else
-      render :edit, status: :unprocessable_entity
+      render turbo_stream: turbo_stream.update(
+        "modal",
+        template: "mypages/edit",
+        locals: { user: @user }
+      ), status: :unprocessable_entity
     end
   end
 

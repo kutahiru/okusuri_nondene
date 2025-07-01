@@ -1,15 +1,11 @@
 class MedicationSchedulesController < ApplicationController
   before_action :get_medication_schedule, only: %i[edit update destroy]
-
+  before_action :get_medication_group, only: %i[new create]
   def new
-    @medication_group = MedicationGroup.find(params[:medication_group_id])
     @medication_schedule = @medication_group.medication_schedules.build
   end
 
   def create
-    @medication_group = MedicationGroup.find(params[:medication_group_id])
-
-    # サーバー側でもセキュリティチェック
     if maximum_message = MedicationSchedule.check_medication_schedule_maximum(params[:medication_group_id])
       @medication_schedule = @medication_group.medication_schedules.build(medication_schedule_update_param)
       @medication_schedule.errors.add(:base, maximum_message)
@@ -57,7 +53,11 @@ class MedicationSchedulesController < ApplicationController
         turbo_flash("success", "スケジュールを更新しました")
       ]
     else
-      render :edit, status: :unprocessable_entity
+      render turbo_stream: turbo_stream.update(
+        "modal",
+        template: "medication_schedules/edit",
+        locals: { medication_schedule: @medication_schedule }
+      ), status: :unprocessable_entity
     end
   end
 
@@ -75,14 +75,21 @@ class MedicationSchedulesController < ApplicationController
         turbo_flash("success", "スケジュールを削除しました")
       ]
     else
-      render :edit, status: :unprocessable_entity
+      error_message = @medication_schedule.errors.any? ?
+                     @medication_schedule.errors.full_messages.join(", ") :
+                     "削除に失敗しました"
+      render turbo_stream: turbo_flash("error", error_message)
     end
   end
 
   private
 
+  def get_medication_group
+    @medication_group = current_user.medication_groups.find(params[:medication_group_id])
+  end
+
   def get_medication_schedule
-    @medication_schedule = MedicationSchedule.find(params[:id])
+    @medication_schedule = current_user.medication_schedules.find(params[:id])
   end
 
   def medication_schedule_update_param

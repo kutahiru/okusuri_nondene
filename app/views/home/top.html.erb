@@ -1,11 +1,12 @@
-<section class="py-12 bg-gray-50" data-controller="chat-animation">
+<div data-controller="chat-animation">
+<section class="py-12 bg-white" data-chat-animation-target="chatSection">
   <div class="container mx-auto px-6">
     <div class="max-w-2xl mx-auto">
       <div class="space-y-6">
         <div class="flex items-start space-x-3 opacity-0 translate-y-4" data-chat-animation-target="message" data-delay="0">
           <div class="flex-1">
             <div class="bg-white rounded-2xl px-6 py-4 shadow-sm border border-gray-100 inline-block">
-              <p class="text-gray-800 font-medium">おくすり飲んだ？</p>
+              <p class="text-gray-600 font-medium">おくすり飲んだ？</p>
             </div>
             <div class="ml-2">
               <span class="text-xs text-gray-500">既読</span>
@@ -14,7 +15,7 @@
           </div>
         </div>
 
-        <div class="flex items-start space-x-3 flex-row-reverse opacity-0 translate-y-4" data-chat-animation-target="message" data-delay="3000">
+        <div class="flex items-start space-x-3 flex-row-reverse opacity-0 translate-y-4" data-chat-animation-target="message" data-delay="2200">
           <div class="flex-1 flex justify-end">
             <div class="bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl px-6 py-4 text-white inline-block">
               <p class="font-medium">うん。<br>今から飲むところ。</p>
@@ -22,10 +23,10 @@
           </div>
         </div>
 
-        <div class="flex items-start space-x-3 opacity-0 translate-y-4" data-chat-animation-target="message" data-delay="6000">
+        <div class="flex items-start space-x-3 opacity-0 translate-y-4" data-chat-animation-target="message" data-delay="4400">
           <div class="flex-1">
             <div class="bg-white rounded-2xl px-6 py-4 shadow-sm border border-gray-100 inline-block">
-              <p class="text-gray-800 font-medium">毎日は大変だよね。<br>でも、ずっと元気でいて欲しいから。<br>おくすり飲んでね。</p>
+              <p class="text--gray-600 font-medium">毎日は大変だよね。<br>でも、ずっと元気でいて欲しいから。<br>おくすり飲んでね。</p>
             </div>
             <div class="ml-2">
               <span class="text-xs text-gray-500">送信済</span>
@@ -33,12 +34,21 @@
             </div>
           </div>
         </div>
+
+        <!-- 切り替えボタン -->
+        <div class="flex justify-center mt-12 opacity-0 translate-y-4" data-chat-animation-target="switchButton" data-delay="6600">
+          <button class="w-12 h-12 bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800 rounded-full transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center animate-pulse" data-action="click->chat-animation#switchToHero">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 10l5 5 5-5"></path>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-blue-50">
+<section class="relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-blue-50 opacity-0 translate-y-8 hidden" data-chat-animation-target="heroSection">
   <div class="absolute inset-0 bg-white/50"></div>
   <div class="relative container mx-auto px-6 py-16 lg:py-24">
     <div class="text-center max-w-4xl mx-auto">
@@ -49,10 +59,9 @@
         <span>家族とつながるおくすり管理</span>
       </div>
 
-      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-        <span class="text-teal-600 animate-pulse">おくすり</span>飲んでね
-      </h1>
-
+      <div class="mb-6">
+        <%= image_tag "title.png", alt: "おくすり飲んでね", class: "mx-auto h-20 md:h-32" %>
+      </div>
       <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
         家族に忘れずにおくすりを飲んで欲しい。<br>
         そんな想いを実現する、家族思いのおくすり管理アプリです。
@@ -76,8 +85,16 @@
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
             </svg>
-            グループを見る
+            グループ一覧
           <% end %>
+        <% end %>
+        
+        <%= link_to guide_path,
+          class: "inline-flex items-center px-8 py-4 bg-white text-gray-700 font-medium rounded-xl border border-gray-300 hover:bg-gray-50 hover:text-gray-900 transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md" do %>
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          使い方
         <% end %>
       </div>
     </div>
@@ -85,7 +102,7 @@
 </section>
 
 
-<section class="py-16 bg-white">
+<section class="py-16 bg-white opacity-0 translate-y-8 hidden" data-chat-animation-target="featuresSection">
   <div class="container mx-auto px-6">
     <div class="text-center mb-16">
       <h2 class="text-3xl font-bold text-gray-900 mb-4">主な機能</h2>
@@ -100,12 +117,13 @@
         </p>
       </div>
 
-      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border border-blue-200 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
-        <h3 class="text-xl font-bold text-blue-900 mb-4">飲み続けるためのご褒美設定機能</h3>
-        <p class="text-blue-800 leading-relaxed">
-          モチベーション維持のために、ご褒美の設定が可能です。継続しておくすりを飲むことをサポートします。
+      <div class="bg-gradient-to-br from-coral-50 to-coral-100 rounded-2xl p-8 border border-coral-200 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer">
+        <h3 class="text-xl font-bold text-coral-900 mb-4">飲み続けるためのご褒美設定機能</h3>
+        <p class="text-coral-800 leading-relaxed">
+          モチベーション維持のために、ご褒美の設定が可能です。家族が継続しておくすりを飲むためにサポートします。
         </p>
       </div>
     </div>
   </div>
 </section>
+</div>

@@ -67,7 +67,7 @@ class MedicationGroupUsersController < ApplicationController
   private
 
   def set_medication_group_user
-    @medication_group_user = MedicationGroupUser.find(params[:id])
+    @medication_group_user = current_user.medication_groups.find(params[:medication_group_id]).medication_group_users.find(params[:id])
   end
 
   def medication_group_user_update_params

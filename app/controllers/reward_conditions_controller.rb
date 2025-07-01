@@ -6,15 +6,23 @@ class RewardConditionsController < ApplicationController
   end
 
   def create
-    @reward_condition = @medication_group.create_reward_condition!(reward_condition_update_param)
+    @reward_condition = @medication_group.create_reward_condition(reward_condition_update_param)
 
-    render turbo_stream: [
-      turbo_stream.update(
-      "reward_condition",
-      partial: "reward_conditions/reward_condition",
-      locals: { reward_condition: @reward_condition }),
-      turbo_flash("success", "ご褒美設定を作成しました")
-    ]
+    if @reward_condition.persisted?
+      render turbo_stream: [
+        turbo_stream.update(
+        "reward_condition",
+        partial: "reward_conditions/reward_condition",
+        locals: { reward_condition: @reward_condition }),
+        turbo_flash("success", "ご褒美設定を作成しました")
+      ]
+    else
+      render turbo_stream: turbo_stream.update(
+        "modal",
+        template: "reward_conditions/new",
+        locals: { reward_condition: @reward_condition }
+      ), status: :unprocessable_entity
+    end
   end
 
   def edit
@@ -30,7 +38,11 @@ class RewardConditionsController < ApplicationController
         turbo_flash("success", "ご褒美設定を更新しました")
       ]
     else
-      render :edit, status: :unprocessable_entity
+      render turbo_stream: turbo_stream.update(
+        "modal",
+        template: "reward_conditions/edit",
+        locals: { reward_condition: @reward_condition }
+      ), status: :unprocessable_entity
     end
   end
 
@@ -43,19 +55,22 @@ class RewardConditionsController < ApplicationController
         turbo_flash("success", "ご褒美設定を削除しました")
       ]
     else
-      render :edit, status: :unprocessable_entity
+      error_message = @reward_condition.errors.any? ?
+                     @reward_condition.errors.full_messages.join(", ") :
+                     "削除に失敗しました"
+      render turbo_stream: turbo_flash("error", error_message)
     end
   end
 
   private
 
   def get_reward_condition
-    @reward_condition = RewardCondition.find(params[:id])
+    @reward_condition = current_user.reward_conditions.find(params[:id])
     @medication_group = @reward_condition.medication_group
   end
 
   def get_medication_group
-    @medication_group = MedicationGroup.find(params[:medication_group_id])
+    @medication_group = current_user.medication_groups.find(params[:medication_group_id])
   end
 
   def reward_condition_update_param

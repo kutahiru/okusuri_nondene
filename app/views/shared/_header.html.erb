@@ -3,17 +3,10 @@
     <div class="container px-6 py-4 mx-auto lg:flex lg:justify-between lg:items-center">
       <div class="flex items-center justify-between">
         <!-- ロゴやブランド名 -->
-        <div class="flex items-center space-x-3">
-          <div class="w-10 h-10 bg-gradient-to-r from-teal-400 to-teal-500 rounded-full flex items-center justify-center">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 008 10.172V5L8 4z"></path>
-            </svg>
-          </div>
-          <%= link_to root_path, class: "text-xl font-bold text-gray-800 hover:text-teal-600 transition-colors" do %>
-            おくすり飲んでね
-          <% end %>
-        </div>
-        
+        <%= link_to root_path, class: "flex items-center hover:opacity-80 transition-opacity" do %>
+          <%= image_tag "header_title.png", alt: "おくすり飲んでね", class: "h-10" %>
+        <% end %>
+
         <!-- ハンバーガーメニューボタン（モバイル用） -->
         <div class="flex lg:hidden">
           <button 
@@ -34,18 +27,27 @@
       </div>
 
       <!-- ナビゲーションメニュー -->
-      <div 
+      <div
         data-mobile-menu-target="menu"
         class="hidden absolute inset-x-0 z-20 w-full px-6 py-4 mt-2 bg-white border border-gray-200 rounded-xl shadow-xl lg:bg-transparent lg:border-none lg:shadow-none lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:w-auto lg:block lg:opacity-100"
       >
         <div class="flex flex-col space-y-2 lg:flex-row lg:items-center lg:space-y-0 lg:space-x-6">
-          <%= link_to root_path, 
+          <%= link_to root_path,
             class: "flex items-center px-3 py-2 font-medium text-gray-700 rounded-lg hover:text-teal-600 hover:bg-teal-50 lg:hover:bg-transparent lg:px-3 lg:py-2 transition-all duration-200",
             data: { action: "click->mobile-menu#closeOnMobile" } do %>
             <svg class="w-4 h-4 mr-2 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
             </svg>
             ホーム
+          <% end %>
+
+          <%= link_to guide_path,
+            class: "flex items-center px-3 py-2 font-medium text-gray-700 rounded-lg hover:text-teal-600 hover:bg-teal-50 lg:hover:bg-transparent lg:px-3 lg:py-2 transition-all duration-200",
+            data: { action: "click->mobile-menu#closeOnMobile" } do %>
+            <svg class="w-4 h-4 mr-2 lg:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            使い方
           <% end %>
 
           <%= link_to medication_groups_path,
