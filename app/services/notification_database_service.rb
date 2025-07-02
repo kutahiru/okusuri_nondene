@@ -17,7 +17,7 @@ class NotificationDatabaseService
       ,sch.medication_group_id
       ,g.group_name
     FROM medication_schedules sch
-    INNER JOIN medication_group g ON
+    INNER JOIN medication_groups g ON
       sch.medication_group_id = g.id
     LEFT JOIN medication_managements ma ON
           sch.id = ma.medication_schedule_id
