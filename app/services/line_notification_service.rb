@@ -1,9 +1,10 @@
 class LineNotificationService
-  def self.send_line_message_with_button(medication_management_id, uid, message_text)
+  def self.send_line_message_with_button(medication_management_id, uid, group_name, message_text)
     # ボタンにIDを埋め込む
     taken_data = "medication_taken_#{medication_management_id}"
 
     lines = [
+      group_name,
       message_text,
       "おくすり飲んでね"
     ]
@@ -51,7 +52,7 @@ class LineNotificationService
     message_text = lines.join("\n")
 
     family_watchers.each do |family_watcher|
-       send_line_message(family_watcher.uid, message_text)
+       send_line_message(family_watcher.user.uid, message_text)
     end
   end
 
@@ -62,12 +63,20 @@ class LineNotificationService
       .family_watcher
   end
 
-  def self.send_line_message(uid, message_text)
+  # シンプルなメッセージの送信
+  def self.send_line_message(uid, group_name, message_text)
+    lines = [
+      group_name,
+      message_text
+    ]
+
+    push_message_text = lines.join("\n")
+
     # メッセージリクエストを作成
     push_request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
       to: uid,
       messages: [
-        Line::Bot::V2::MessagingApi::TextMessage.new(text: message_text)
+        Line::Bot::V2::MessagingApi::TextMessage.new(text: push_message_text)
       ]
     )
 

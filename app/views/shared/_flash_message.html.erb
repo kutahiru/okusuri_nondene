@@ -1,0 +1,7 @@
+<%# Deviceのエラー用 %>
+<% if flash.any? %>
+  <% flash.each do |message_type, message| %>
+    <%= render 'shared/flash_message_item', message_type: message_type, message: message %>
+  <% end %>
+  <% flash.clear %>
+<% end %>

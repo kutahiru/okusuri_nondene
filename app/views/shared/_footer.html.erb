@@ -1,0 +1,18 @@
+<footer class="bg-gray-50 border-t border-gray-200 py-6 mt-16">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+      <div class="mb-4 md:mb-0">
+        <p>&copy; <%= Date.current.year %> おくすり飲んでね</p>
+      </div>
+      <div class="flex space-x-6">
+        <%= link_to "使い方ガイド", guide_path, class: "hover:text-gray-800 transition-colors" %>
+        <a href="https://kiyac.app/privacypolicy/waghod0UnnVOB3ivJ7Jd" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="hover:text-gray-800 transition-colors">
+          プライバシーポリシー
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

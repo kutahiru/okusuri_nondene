@@ -1,6 +1,112 @@
 ja:
+  errors:
+    messages:
+      blank: "必須項目です。"
+      empty: "必須項目です。"
+      too_long: "文字数が上限を超えています。"
+      too_short: "文字数が不足しています。"
+      invalid: "形式が正しくありません。"
+      taken: "既に使用されています。"
+      inclusion: "選択肢に含まれていません。"
+      exclusion: "予約語のため使用できません。"
+      not_a_number: "数値で入力してください。"
+      greater_than: "%{count}より大きい値を入力してください。"
+      greater_than_or_equal_to: "%{count}以上の値を入力してください。"
+      less_than: "%{count}より小さい値を入力してください。"
+      less_than_or_equal_to: "%{count}以下の値を入力してください。"
+  activerecord:
+    models:
+      user: "ユーザー"
+      medication_group: "服薬グループ"
+      medication_group_user: "グループユーザー"
+      medication_group_invitation: "グループ招待"
+      medication_schedule: "服薬スケジュール"
+      medication_management: "服薬管理"
+      reward_condition: "ご褒美条件"
+      reward_history: "ご褒美履歴"
+      schedule_drug: "服薬薬剤"
+    attributes:
+      user:
+        user_name: "ユーザー名"
+        provider: "プロバイダー"
+        uid: "UID"
+        description_read: "説明読了フラグ"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      medication_group:
+        group_name: "グループ名"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      medication_group_user:
+        medication_group_id: "服薬グループ"
+        user_id: "ユーザー"
+        user_type: "ユーザー区分"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      medication_group_invitation:
+        medication_group_id: "服薬グループ"
+        user_id: "ユーザー"
+        max_uses: "最大使用数"
+        used_count: "使用回数"
+        expires_at: "有効期限"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      medication_schedule:
+        medication_group_id: "服薬グループ"
+        title: "タイトル"
+        medication_time: "服薬時刻"
+        reminder_count: "リマインダー回数"
+        reminder_interval: "リマインダー間隔（分）"
+        family_notification_delay: "家族通知待機時間（分）"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      medication_management:
+        medication_schedule_id: "服薬スケジュール"
+        medication_group_id: "服薬グループ"
+        medication_date: "服薬日"
+        is_taken: "服薬状況"
+        completed_at: "服薬完了時刻"
+        reminder_sent_count: "リマインダー送信回数"
+        original_schedule_title: "元スケジュール名"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      reward_condition:
+        medication_group_id: "服薬グループ"
+        reward_name: "ご褒美名"
+        condition_type: "条件タイプ"
+        target_weekday: "対象曜日"
+        target_value: "目標値"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      reward_history:
+        medication_group_id: "服薬グループ"
+        reward_name: "ご褒美名"
+        reward_date: "ご褒美獲得日"
+        medication_management_id: "服薬管理"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      schedule_drug:
+        medication_schedule_id: "服薬スケジュール"
+        drug_name: "薬剤名"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+      reward_condition/condition_type:
+        weekly: "1週間連続"
+        daily_streak: "連続日数"
+      reward_condition/target_weekday:
+        sunday: "日曜日"
+        monday: "月曜日"
+        tuesday: "火曜日"
+        wednesday: "水曜日"
+        thursday: "木曜日"
+        friday: "金曜日"
+        saturday: "土曜日"
   enums:
     medication_group_user:
       user_type:
         medication_taker: "おくすり飲む人"
         family_watcher: "見守り家族"
+    reward_condition:
+      condition_type:
+        weekly: "1週間連続"
+        daily_streak: "連続日数"

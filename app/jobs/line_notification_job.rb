@@ -10,14 +10,20 @@ class LineNotificationJob < ApplicationJob
     # 服薬済なら通知不要
     return if medication_management.medication_taken?
 
-    # LINE通知送信
-    LineNotificationService.send_line_message_with_button(medication_management.id, notification_target.uid, notification_target.schedule_title)
+    if notification_target.medication_taker?
+      # 服薬者の場合
+      # リマインダー送信回数を加算する(異常時に何度もLINE通知送信を避けるため、送信回数加算が先)
+      if medication_management.increment(:reminder_sent_count)
+        LineNotificationService.send_line_message_with_button(medication_management.id, notification_target.uid, notification_target.group_name, notification_target.schedule_title)
+      end
+    else
+      # 見守り家族の場合
+      # LINE通知送信
+      LineNotificationService.send_line_message(notification_target.uid, notification_target.group_name, notification_target.schedule_title)
+    end
 
     # 見守り家族なら終了
     return if notification_target.family_watcher?
-
-    # リマインダー送信回数を加算する
-    medication_management.increment!(:reminder_sent_count)
 
     # リマインド回数分通知済みなら通知不要
     return if medication_management.reminder_sent_count > medication_management.medication_schedule.reminder_count

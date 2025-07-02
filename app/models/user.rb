@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  validates :user_name, presence: true, length: { maximum: 255 }
+  validates :user_name, presence: true, length: { maximum: 20 }
   validates :provider, presence: true
   validates :uid, presence: true
   validates :provider, uniqueness: { scope: :uid }
@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :medication_groups, through: :medication_group_users
   has_many :medication_histories, dependent: :destroy
   has_many :medication_group_invitations, dependent: :destroy
+  has_many :medication_schedules, through: :medication_groups
+  has_many :reward_conditions, through: :medication_groups
 
   enum description_read: { not_read: false, read: true }, _prefix: :description
 
@@ -17,7 +19,7 @@ class User < ApplicationRecord
 
   def get_user_groups
     # 現在のユーザーが所属するグループとメンバー一覧を取得する
-    medication_groups.includes(:users).order(id: :desc)
+    medication_groups.includes(medication_group_users: :user).order(id: :desc)
   end
 
   # lineから取得した情報を保存するためのカラムとの関連付け

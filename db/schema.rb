@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_22_203858) do
   create_table "medication_group_users", comment: "服薬グループユーザー", force: :cascade do |t|
     t.bigint "medication_group_id", null: false
     t.bigint "user_id", null: false
-    t.integer "user_type", null: false, comment: "ユーザー区分 0:服薬者 1:見守り家族"
+    t.string "user_type", null: false, comment: "ユーザー区分 medication_taker:服薬者 family_watcher:見守り家族"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["medication_group_id"], name: "index_medication_group_users_on_medication_group_id"
@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_22_203858) do
   create_table "reward_conditions", comment: "ご褒美管理", force: :cascade do |t|
     t.bigint "medication_group_id", null: false
     t.string "reward_name", null: false, comment: "ご褒美名"
-    t.integer "condition_type", null: false, comment: "条件タイプ 0:ご褒美なし 1:1週間 2:連続日数"
+    t.string "condition_type", null: false, comment: "条件タイプ weekly:1週間 daily_streak:連続日数"
     t.string "target_weekday", comment: "曜日 条件タイプが1:1週間の場合に利用する"
     t.integer "target_value", comment: "連続目標値"
     t.datetime "created_at", null: false
@@ -83,11 +83,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_22_203858) do
     t.bigint "medication_group_id", null: false
     t.string "reward_name", null: false, comment: "ご褒美名"
     t.date "reward_date", null: false, comment: "ご褒美獲得日"
-    t.bigint "medication_managements_id", comment: "ご褒美獲得時の最終服薬 次回のカウント開始に利用"
+    t.bigint "medication_management_id", comment: "ご褒美獲得時の最終服薬 次回のカウント開始に利用"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["medication_group_id"], name: "index_reward_histories_on_medication_group_id"
-    t.index ["medication_managements_id"], name: "index_reward_histories_on_medication_managements_id"
+    t.index ["medication_management_id"], name: "index_reward_histories_on_medication_management_id"
   end
 
   create_table "schedule_drugs", comment: "服薬薬剤", force: :cascade do |t|
@@ -117,6 +117,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_22_203858) do
   add_foreign_key "medication_schedules", "medication_groups"
   add_foreign_key "reward_conditions", "medication_groups"
   add_foreign_key "reward_histories", "medication_groups"
-  add_foreign_key "reward_histories", "medication_managements", column: "medication_managements_id"
+  add_foreign_key "reward_histories", "medication_managements"
   add_foreign_key "schedule_drugs", "medication_schedules"
 end

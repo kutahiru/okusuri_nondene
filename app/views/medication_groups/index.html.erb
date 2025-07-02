@@ -1,18 +1,22 @@
-<section class="container px-6 mx-auto">
+<section class="container px-6 mx-auto my-4">
   <h2 class="px-6 mt-2 text-4xl font-bold text-dark-65">グループ一覧</h2>
 
-  <div class="px-6 py-2 mx-auto">
+  <div class="px-6 py-2 mx-auto my-4">
     <div id="medication_groups" class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
       <% if @medication_groups.present? %>
         <%= render @medication_groups %>
       <% end %>
     </div>
 
-    <div class="pt-2 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-4">
-      <%= link_to "グループ追加",
-      new_medication_group_path,
-      class: "mt-2 px-4 py-2 bg-sage-500 rounded-lg text-center hover:bg-sage-600 transition-colors",
-      data: { turbo_frame: "modal" } %>
+    <div class="pt-6">
+      <%= link_to new_medication_group_path,
+        class: "group inline-flex items-center justify-center w-full md:w-auto px-8 py-4 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold rounded-xl hover:from-teal-600 hover:to-teal-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl",
+        data: { turbo_frame: "modal" } do %>
+        <svg class="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+        グループ追加
+      <% end %>
     </div>
   </div>
 </section>

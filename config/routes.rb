@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "medication_managements/index"
   root "home#top"
 
   devise_for :users, controllers: {
@@ -11,16 +10,20 @@ Rails.application.routes.draw do
     delete "logout", to: "users/sessions#destroy", as: :logout
   end
 
+  resource :mypage, only: %i[show edit update destroy]
+  resource :guide, only: %i[show]
+
   resources :medication_groups do
-    resources :medication_schedules, shallow: true
-    resources :medication_group_users, shallow: true do
+    resources :medication_schedules, shallow: true, only: %i[new create edit update destroy]
+    resources :medication_group_users, shallow: true, only: %i[new edit_multiple, update_multiple destroy] do
       collection do
         get :edit_multiple
         patch :update_multiple
       end
     end
-    resources :medication_group_invitations, shallow: true
-    resources :medication_managements, shallow: true
+    resources :medication_group_invitations, shallow: true, only: %i[create show accept]
+    resources :medication_managements, shallow: true, only: %i[index ]
+    resources :reward_conditions, shallow: true, only: %i[new create edit update destroy]
   end
 
   # 招待URL専用（トークンベース）

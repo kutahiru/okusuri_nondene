@@ -1,7 +1,7 @@
 # 定期実行でmedication_schedulesテーブルからデータを取得し、以下の処理を実施する。
 # ・1回目のジョブキューを作成する
 # ・管理テーブルを作成する
-# 2回目以降のリマインド実行は別処理でキューを作成
+# 2回目以降のリマインド実行はline_notification_job.rbでキューを作成
 class GetNotificationTargetsJob < ApplicationJob
   sidekiq_options retry: false
 

@@ -9,7 +9,7 @@
       <% end %>
     <% end %>
 
-    <title><%= content_for(:title) || "Myapp" %></title>
+    <title><%= content_for(:title) || "おくすり飲んでね" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
@@ -17,10 +17,9 @@
 
     <%= yield :head %>
 
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <%# ファビコン %>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,9 +31,14 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
+  <body class="min-h-screen flex flex-col">
     <%= render "shared/header" %>
-    <%= yield %>
+    <div id="flash-container" class="fixed top-16 left-0 right-0 z-40 px-6"></div>
+    <%= render "shared/flash_message" %>
+    <main class="pt-20 flex-1">
+      <%= yield %>
+    </main>
+    <%= render "shared/footer" %>
     <%= turbo_frame_tag "modal" %>
   </body>
 </html>
