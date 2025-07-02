@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   def get_user_groups
     # 現在のユーザーが所属するグループとメンバー一覧を取得する
-    medication_groups.includes(:users).order(id: :desc)
+    medication_groups.includes(medication_group_users: :user).order(id: :desc)
   end
 
   # lineから取得した情報を保存するためのカラムとの関連付け

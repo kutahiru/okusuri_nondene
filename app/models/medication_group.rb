@@ -17,7 +17,8 @@ class MedicationGroup < ApplicationRecord
         user_id: user_id,
         user_type: "medication_taker"
       )
-      group
+
+      includes(medication_group_users: :user).find(group.id)
     end
   end
 end
