@@ -7,7 +7,7 @@ class LineNotificationJob < ApplicationJob
 
     medication_management = MedicationManagement.includes(:medication_schedule).find(notification_target.medication_management_id)
 
-    # 服薬済なら通知不要
+    # 服薬済なら通知不要a
     return if medication_management.medication_taken?
 
     if notification_target.medication_taker?
