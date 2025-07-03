@@ -6,7 +6,8 @@ class LineNotificationService
     lines = [
       group_name,
       message_text,
-      "おくすり飲んでね"
+      "おくすり飲んでね",
+      ENV["APP_BASE_URL"]
     ]
 
     button_message_text = lines.join("\n")
@@ -46,7 +47,8 @@ class LineNotificationService
 
     lines = [
       medication_management.original_schedule_title,
-      "おくすり飲んだよ"
+      "おくすり飲んだよ",
+      ENV["APP_BASE_URL"]
     ]
 
     message_text = lines.join("\n")
@@ -67,7 +69,8 @@ class LineNotificationService
   def self.send_line_message(uid, group_name, message_text)
     lines = [
       group_name,
-      message_text
+      message_text,
+      ENV["APP_BASE_URL"]
     ]
 
     push_message_text = lines.join("\n")

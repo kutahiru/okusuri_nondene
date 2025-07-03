@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Patch for omniauth-line to support bot_prompt parameter
-require 'omniauth/strategies/line'
+require "omniauth/strategies/line"
 
 module OmniAuth
   module Strategies
