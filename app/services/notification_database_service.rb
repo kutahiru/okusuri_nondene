@@ -2,7 +2,11 @@
 class NotificationDatabaseService
   # 通知スケジュールの取得
   def self.get_notification_data
-    sql = <<~SQL
+    ActiveRecord::Base.transaction do
+      # トランザクション内でタイムゾーンを東京時間に設定（ローカルスコープ）
+      ActiveRecord::Base.connection.execute("SET LOCAL TIME ZONE 'Asia/Tokyo'")
+
+      sql = <<~SQL
     --対象となるスケジュールを取得
     --1時間前後のスケジュールを取得する
     SELECT
@@ -45,9 +49,10 @@ class NotificationDatabaseService
       "notification_data",
     )
 
-    result.map do |row|
-      p row
-      MedicationScheduleTarget.new(row.to_h)
+      result.map do |row|
+        p row
+        MedicationScheduleTarget.new(row.to_h)
+      end
     end
   end
 
