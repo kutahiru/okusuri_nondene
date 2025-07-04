@@ -59,9 +59,16 @@ class MedicationGroupUser < ApplicationRecord
     end
   end
 
+  # 引数のグループの見守り家族を取得
+  def self.find_family_watchers(medication_group_id)
+    includes(:user)
+      .where(medication_group_id: medication_group_id)
+      .family_watcher
+  end
+
   # 参加可能なグループ数のチェック
   def validate_user_group_limit
-    count = where(user_id: user_id)
+    count = MedicationGroupUser.where(user_id: user_id)
       .where.not(id: id)
       .count()
 
@@ -72,19 +79,12 @@ class MedicationGroupUser < ApplicationRecord
 
   # 1グループに参加可能なユーザー数のチェック
   def validate_user_limit_in_group
-    count = where(medication_group_id: medication_group_id)
+    count = MedicationGroupUser.where(medication_group_id: medication_group_id)
       .where.not(id: id)
       .count()
 
     if count >= MAX_USERS_PER_GROUP
       errors.add(:base, "1グループにユーザーは#{MAX_USERS_PER_GROUP}人までです。")
     end
-  end
-
-  # 引数のグループの見守り家族を取得
-  def self.find_family_watchers(medication_group_id)
-    includes(:user)
-      .where(medication_group_id: medication_group_id)
-      .family_watcher
   end
 end

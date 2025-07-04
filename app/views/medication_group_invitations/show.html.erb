@@ -13,14 +13,14 @@
         </h1>
         <p class="text-teal-100">グループへの招待</p>
       </div>
-      
+
       <!-- Content -->
       <div class="p-6">
 
         <%= form_with url: accept_medication_group_invitation_token_path(token: params[:token]), method: :patch, class: "space-y-6" do |form| %>
           <div>
             <h3 class="text-lg font-semibold text-gray-800 mb-4 text-center">参加方法を選択してください</h3>
-            
+
             <div class="space-y-3">
               <!-- 服薬者オプション -->
               <label class="relative cursor-pointer group">
@@ -42,8 +42,8 @@
 
               <!-- 家族オプション -->
               <label class="relative cursor-pointer group">
-                <%= form.radio_button :user_type, "family_watcher", class: "sr-only peer" %>
-                <div class="p-4 border-2 border-gray-200 rounded-xl transition-all duration-200 peer-checked:border-teal-500 peer-checked:bg-teal-50 peer-checked:shadow-md hover:border-teal-300 group-hover:shadow-sm">
+                <%= form.radio_button :user_type, "family_watcher", class: "sr-only peer", checked: true %>
+                <div class="mt-2 p-4 border-2 border-gray-200 rounded-xl transition-all duration-200 peer-checked:border-teal-500 peer-checked:bg-teal-50 peer-checked:shadow-md hover:border-teal-300 group-hover:shadow-sm">
                   <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 bg-gradient-to-r from-coral-500 to-coral-600 rounded-full flex items-center justify-center">
                       <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,13 +60,12 @@
             </div>
           </div>
 
-          
           <% if user_signed_in? %>
             <%# ログイン済の場合 %>
             <div class="space-y-3">
               <%= form.submit "グループに参加する",
                   class: "w-full inline-flex items-center justify-center px-6 py-4 text-base font-semibold text-white bg-gradient-to-r from-teal-500 to-teal-600 rounded-xl hover:from-teal-600 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]" %>
-              
+
               <%= link_to root_path,
                   class: "w-full inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md" do %>
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +85,7 @@
                   <p class="text-sm font-medium">LINEログインが必要です</p>
                 </div>
               </div>
-              
+
               <%= button_to user_line_omniauth_authorize_path,
                 method: :post,
                 class: "w-full inline-flex items-center justify-center px-6 py-4 text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]",
@@ -96,7 +95,7 @@
                 </svg>
                 LINEでログイン
               <% end %>
-              
+
               <%= link_to root_path,
                   class: "w-full inline-flex items-center justify-center px-6 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 shadow-sm hover:shadow-md" do %>
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
