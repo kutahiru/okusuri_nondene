@@ -2,7 +2,7 @@ class RewardConditionsController < ApplicationController
   before_action :set_reward_condition, only: %i[edit update destroy]
   before_action :set_medication_group, only: %i[new create]
   def new
-    @reward_condition = @medication_group.build_reward_condition
+    @reward_condition = @medication_group.build_reward_condition(condition_type: "weekly", target_weekday: "sunday", target_value: 10)
   end
 
   def create
