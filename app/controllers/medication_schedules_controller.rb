@@ -2,7 +2,7 @@ class MedicationSchedulesController < ApplicationController
   before_action :set_medication_schedule, only: %i[edit update destroy]
   before_action :set_medication_group, only: %i[new create]
   def new
-    @medication_schedule = @medication_group.medication_schedules.build
+    @medication_schedule = @medication_group.medication_schedules.build(reminder_interval: 15, family_notification_delay: 30)
   end
 
   def create
