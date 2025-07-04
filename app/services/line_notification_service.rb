@@ -1,4 +1,5 @@
 class LineNotificationService
+  # ボタン付きの服薬通知
   def self.send_line_message_with_button(medication_management_id, uid, group_name, message_text)
     # ボタンにIDを埋め込む
     taken_data = "medication_taken_#{medication_management_id}"
@@ -6,8 +7,7 @@ class LineNotificationService
     lines = [
       group_name,
       message_text,
-      "おくすり飲んでね",
-      ENV["APP_BASE_URL"]
+      "おくすり飲んでね"
     ]
 
     button_message_text = lines.join("\n")
@@ -15,6 +15,10 @@ class LineNotificationService
     buttons_template = Line::Bot::V2::MessagingApi::ButtonsTemplate.new(
       text: button_message_text,
       actions: [
+        Line::Bot::V2::MessagingApi::UriAction.new(
+          label: "アプリにアクセス",
+          uri: ENV["APP_BASE_URL"]
+        ),
         Line::Bot::V2::MessagingApi::PostbackAction.new(
           label: "おくすり飲んだよ",
           data: taken_data,
@@ -43,11 +47,14 @@ class LineNotificationService
 
   # 見守り家族に服薬済を通知
   def self.family_watcher_send_line_message(medication_management)
-    family_watchers = find_family_watchers(medication_management.medication_group_id)
+    family_watchers = MedicationGroupUser.find_family_watchers(medication_management.medication_group_id)
 
     lines = [
       medication_management.original_schedule_title,
       "おくすり飲んだよ",
+      "", # 空行
+      "", # 空行
+      "おくすり飲んでね",
       ENV["APP_BASE_URL"]
     ]
 
@@ -58,18 +65,16 @@ class LineNotificationService
     end
   end
 
-  def self.find_family_watchers(medication_group_id)
-    MedicationGroupUser
-      .includes(:user)
-      .where(medication_group_id: medication_group_id)
-      .family_watcher
-  end
-
   # シンプルなメッセージの送信
+  # 見守り家族への通知に利用
   def self.send_line_message(uid, group_name, message_text)
     lines = [
       group_name,
       message_text,
+      "まだおくすり飲めてないよ",
+      "", # 空行
+      "", # 空行
+      "おくすり飲んでね",
       ENV["APP_BASE_URL"]
     ]
 
