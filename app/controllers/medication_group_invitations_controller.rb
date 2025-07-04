@@ -26,6 +26,13 @@ class MedicationGroupInvitationsController < ApplicationController
 
   # 招待認証時の処理
   def accept
+    # 既にグループに参加していたらメッセージ
+    if MedicationGroupUser.exists?(medication_group_id: @medication_group_invitation.medication_group_id, user_id: current_user.id)
+      render turbo_stream: [
+        turbo_flash("information", "既にグループに参加しています。") ]
+        return
+    end
+
     @medication_group_invitation.accept_invitation!(
       current_user.id,
       medication_group_invitation_params[:user_type]
