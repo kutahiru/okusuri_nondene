@@ -15,7 +15,7 @@ class LineNotificationService
     buttons_template = Line::Bot::V2::MessagingApi::ButtonsTemplate.new(
       text: button_message_text,
       actions: [
-        Line::Bot::V2::MessagingApi::UriAction.new(
+        Line::Bot::V2::MessagingApi::URIAction.new(
           label: "アプリにアクセス",
           uri: ENV["APP_BASE_URL"]
         ),
