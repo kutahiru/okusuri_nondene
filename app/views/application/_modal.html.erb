@@ -6,14 +6,14 @@
        data-modal-target="backdrop">
 
     <%# モーダルダイアログ %>
-    <div class="relative w-full max-w-md mx-4 p-0 pointer-events-auto"
+    <div class="relative w-full max-w-md mx-4 p-0 pointer-events-auto max-h-[90vh] flex flex-col"
          data-modal-target="content">
 
       <%# モーダルコンテンツ %>
-      <div class="bg-white rounded-lg shadow-xl transform scale-95 transition-transform duration-300">
+      <div class="bg-white rounded-lg shadow-xl transform scale-95 transition-transform duration-300 flex flex-col max-h-full">
 
         <%# モーダルヘッダー %>
-        <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-beige-500 rounded-t-lg">
+        <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-beige-500 rounded-t-lg flex-shrink-0">
           <h5 class="text-xl font-bold text-dark-65 m-0">
             <%= title %>
           </h5>
@@ -28,7 +28,7 @@
         </div>
 
         <%# モーダルボディ %>
-        <div class="p-4">
+        <div class="p-4 overflow-y-auto flex-1">
           <%= yield %>
         </div>
       </div>
