@@ -63,7 +63,11 @@ class MedicationGroupUsersController < ApplicationController
   end
 
   def set_medication_group_user
-    @medication_group_user = current_user.medication_groups.find(params[:medication_group_id]).medication_group_users.find(params[:id])
+    @medication_group_user = MedicationGroupUser.find(params[:id])
+    # current_userがこのグループのメンバーかチェック
+    unless current_user.medication_groups.include?(@medication_group_user.medication_group)
+      raise ActiveRecord::RecordNotFound
+    end
   end
 
   def medication_group_user_update_params
