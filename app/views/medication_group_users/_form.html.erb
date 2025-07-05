@@ -5,15 +5,10 @@
 
   <div class="mb-6">
     <label class="block text-sm font-semibold text-gray-700 mb-3">
-      服薬者を選択
+      おくすり飲む人を選択
     </label>
 
     <div class="relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-        </svg>
-      </div>
       <%= form.select :selected_medication_group_user_id,
           options_from_collection_for_select(
             @medication_group_users,
@@ -21,8 +16,8 @@
             ->(mgu) { mgu.user.user_name },
             @medication_group_users.find { |mgu| mgu.user_type == 'medication_taker' }&.id
           ),
-          { prompt: '服薬者を選択してください' },
-          { class: "w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-200 text-gray-900 font-medium bg-white" } %>
+          { prompt: 'おくすり飲む人を選択してください' },
+          { class: "w-full pl-5 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all duration-200 text-gray-900 font-medium bg-white" } %>
     </div>
 
     <div class="mt-6">

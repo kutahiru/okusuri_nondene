@@ -1,5 +1,8 @@
-<%= form_with(model: medication_group, local: false,
-  data: { action: "turbo:submit-end->modal#close" }
+<%= form_with(model: medication_group, local: medication_group.new_record?,
+  data: { 
+    action: medication_group.new_record? ? "" : "turbo:submit-end->modal#close",
+    turbo_frame: medication_group.new_record? ? "_top" : nil
+  }
   ) do |form| %>
 
   <%# 全般的なエラーメッセージ表示 %>
