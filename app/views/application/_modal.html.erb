@@ -1,16 +1,18 @@
 <%# `"modal"`という<turbo-frame>で囲う %>
 <%= turbo_frame_tag "modal" do %>
   <%# modalコントローラーをアタッチする %>
-  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden pointer-events-none transition-all duration-300"
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden pointer-events-none transition-all duration-300 overflow-hidden"
        data-controller="modal"
        data-modal-target="backdrop">
 
     <%# モーダルダイアログ %>
-    <div class="relative w-full max-w-md mx-4 p-0 pointer-events-auto max-h-[90vh] flex flex-col"
-         data-modal-target="content">
+    <div class="relative w-full max-w-md mx-4 pointer-events-auto"
+         data-modal-target="content"
+         style="max-height: 90vh;">
 
       <%# モーダルコンテンツ %>
-      <div class="bg-white rounded-lg shadow-xl transform scale-95 transition-transform duration-300 flex flex-col max-h-full">
+      <div class="bg-white rounded-lg shadow-xl transform scale-95 transition-transform duration-300 flex flex-col"
+           style="max-height: 90vh;">
 
         <%# モーダルヘッダー %>
         <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-beige-500 rounded-t-lg flex-shrink-0">
