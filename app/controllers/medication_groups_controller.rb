@@ -17,13 +17,8 @@ class MedicationGroupsController < ApplicationController
     begin
       @medication_group = MedicationGroup.create_group_with_user!(medication_group_update_param, current_user.id)
 
-      render turbo_stream: [
-        turbo_stream.prepend(
-        "medication_groups",
-        partial: "medication_groups/medication_group",
-        locals: { medication_group: @medication_group }
-      ),
-      turbo_flash("success", "グループを作成しました") ]
+      flash[:success] = "グループを作成しました"
+      redirect_to medication_group_path(@medication_group)
     rescue ActiveRecord::RecordInvalid => e
       if e.record.is_a?(MedicationGroup)
         # MedicationGroupのバリデーションエラーの場合、元のエラーを保持

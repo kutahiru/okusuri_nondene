@@ -5,14 +5,20 @@
   <div class="relative overflow-hidden bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300 group-hover:scale-[1.02]">
     <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-teal-400/20 to-teal-500/20 rounded-bl-full"></div>
     <div class="p-6">
-      <div class="flex items-start justify-between mb-4">
+      <div class="flex items-start justify-between mb-4 relative">
         <h2 class="text-xl font-bold text-gray-800 group-hover:text-teal-600 transition-colors">
           <%= medication_group.group_name %>
         </h2>
-        <div class="flex items-center space-x-1">
-          <div class="w-2 h-2 bg-teal-400 rounded-full"></div>
-          <div class="w-2 h-2 bg-teal-300 rounded-full"></div>
-          <div class="w-2 h-2 bg-teal-200 rounded-full"></div>
+        <div class="flex items-center space-x-1 absolute -right-2 top-0">
+          <svg class="w-4 h-4 text-teal-400 group-hover:text-teal-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M9 5l7 7-7 7"></path>
+          </svg>
+          <svg class="w-4 h-4 text-teal-300 group-hover:text-teal-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M9 5l7 7-7 7"></path>
+          </svg>
+          <svg class="w-4 h-4 text-teal-200 group-hover:text-teal-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="7" d="M9 5l7 7-7 7"></path>
+          </svg>
         </div>
       </div>
 
