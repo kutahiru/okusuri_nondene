@@ -4,7 +4,7 @@ class MedicationGroupUser < ApplicationRecord
   belongs_to :medication_group
   belongs_to :user
 
-  enum user_type: {
+  enum :user_type, {
     medication_taker: "medication_taker",
     family_watcher: "family_watcher"
   }

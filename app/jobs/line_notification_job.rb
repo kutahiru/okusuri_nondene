@@ -18,7 +18,7 @@ class LineNotificationJob < ApplicationJob
     else
       # 見守り家族の場合
       # LINE通知送信
-      LineNotificationService.send_line_message(notification_target.uid, notification_target.group_name, notification_target.schedule_title)
+      LineNotificationService.family_watcher_notification_delay_send_line_message(notification_target.uid, notification_target.group_name, notification_target.schedule_title)
     end
 
     # 見守り家族なら終了

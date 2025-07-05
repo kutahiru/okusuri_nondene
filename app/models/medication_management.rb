@@ -6,7 +6,7 @@ class MedicationManagement < ApplicationRecord
   validates :medication_date, presence: true
   validates :reminder_sent_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-  enum is_taken: { not_taken: false, taken: true }, _prefix: :medication
+  enum :is_taken, { not_taken: false, taken: true }, prefix: :medication
 
   # 指定月のスコープ（汎用的）
   scope :for_month, ->(date = Date.current) {
@@ -26,6 +26,6 @@ class MedicationManagement < ApplicationRecord
     )
 
     # 服薬済に変更された場合、見守り家族に通知
-    LineNotificationService.family_watcher_send_line_message(medication_management)
+    LineNotificationService.family_watcher_medication_taken_send_line_message(medication_management, medication_management.medication_group.group_name)
   end
 end

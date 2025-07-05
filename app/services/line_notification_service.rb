@@ -45,16 +45,32 @@ class LineNotificationService
     status_code == 200
   end
 
+  # 見守り家族に未服薬を通知
+  def self.family_watcher_notification_delay_send_line_message(uid, group_name, schedule_title)
+    lines = [
+      group_name,
+      schedule_title,
+      "まだおくすり飲めてないよ",
+      "", # 空行
+      "", # 空行
+      ENV["APP_BASE_URL"]
+    ]
+
+    message_text = lines.join("\n")
+
+    send_line_message(uid, message_text)
+  end
+
   # 見守り家族に服薬済を通知
-  def self.family_watcher_send_line_message(medication_management)
+  def self.family_watcher_medication_taken_send_line_message(medication_management, group_name)
     family_watchers = MedicationGroupUser.find_family_watchers(medication_management.medication_group_id)
 
     lines = [
+      group_name,
       medication_management.original_schedule_title,
       "おくすり飲んだよ",
       "", # 空行
       "", # 空行
-      "おくすり飲んでね",
       ENV["APP_BASE_URL"]
     ]
 
@@ -66,25 +82,12 @@ class LineNotificationService
   end
 
   # シンプルなメッセージの送信
-  # 見守り家族への通知に利用
-  def self.send_line_message(uid, group_name, message_text)
-    lines = [
-      group_name,
-      message_text,
-      "まだおくすり飲めてないよ",
-      "", # 空行
-      "", # 空行
-      "おくすり飲んでね",
-      ENV["APP_BASE_URL"]
-    ]
-
-    push_message_text = lines.join("\n")
-
+  def self.send_line_message(uid, message_text)
     # メッセージリクエストを作成
     push_request = Line::Bot::V2::MessagingApi::PushMessageRequest.new(
       to: uid,
       messages: [
-        Line::Bot::V2::MessagingApi::TextMessage.new(text: push_message_text)
+        Line::Bot::V2::MessagingApi::TextMessage.new(text: message_text)
       ]
     )
 
