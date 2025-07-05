@@ -24,7 +24,7 @@
 
       <div class="space-y-3 mb-6">
         <% medication_group.medication_group_users.order(user_type: :desc).each do |group_user| %>
-          <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 bg-gray-50 rounded-lg">
             <div class="flex items-center space-x-3">
               <div class="w-8 h-8 bg-gradient-to-r from-teal-400 to-teal-500 rounded-full flex items-center justify-center">
                 <span class="text-white text-sm font-medium"><%= group_user.user.user_name.first %></span>

@@ -7,7 +7,7 @@ class LineNotificationService
     lines = [
       group_name,
       message_text,
-      "おくすり飲んでね"
+      "⏰おくすり飲んでね"
     ]
 
     button_message_text = lines.join("\n")
@@ -20,9 +20,9 @@ class LineNotificationService
           uri: ENV["APP_BASE_URL"]
         ),
         Line::Bot::V2::MessagingApi::PostbackAction.new(
-          label: "おくすり飲んだよ",
+          label: "✅おくすり飲んだよ",
           data: taken_data,
-          display_text: "おくすり飲んだよ"
+          display_text: "✅おくすり飲んだよ"
         )
       ]
     )
@@ -50,7 +50,7 @@ class LineNotificationService
     lines = [
       group_name,
       schedule_title,
-      "まだおくすり飲めてないよ",
+      "⏰まだおくすり飲めてないよ",
       "", # 空行
       "", # 空行
       ENV["APP_BASE_URL"]
@@ -68,7 +68,7 @@ class LineNotificationService
     lines = [
       group_name,
       medication_management.original_schedule_title,
-      "おくすり飲んだよ",
+      "✅おくすり飲んだよ",
       "", # 空行
       "", # 空行
       ENV["APP_BASE_URL"]
