@@ -31,7 +31,12 @@ class NotificationDatabaseService
         sch.medication_group_id = g.id
       LEFT JOIN medication_managements ma ON
             sch.id = ma.medication_schedule_id
-        AND ma.medication_date = CURRENT_DATE
+        AND ma.medication_date =
+	      CASE
+          WHEN CURRENT_TIME > '23:00:00' AND sch.medication_time <= CURRENT_TIME + INTERVAL '1 hour'
+          THEN CURRENT_DATE + INTERVAL '1 day'
+          ELSE CURRENT_DATE
+        END
       INNER JOIN medication_group_users gu ON
         sch.medication_group_id = gu.medication_group_id
       INNER JOIN users u ON
