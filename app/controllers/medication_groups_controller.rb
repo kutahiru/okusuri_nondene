@@ -84,7 +84,7 @@ class MedicationGroupsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
       format.html { redirect_to medication_groups_path, alert: "アクセス権限がないか、グループが存在しません。" }
-      format.turbo_stream { 
+      format.turbo_stream {
         render turbo_stream: [
           turbo_flash("alert", "アクセス権限がないか、グループが存在しません。")
         ]
