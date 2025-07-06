@@ -7,13 +7,13 @@ class MedicationGroupInvitationsController < ApplicationController
     invitation_token_service = InvitationTokenService.new(params[:medication_group_id], current_user.id)
 
     # 期限付き、暗号化付きの招待用URLを生成
-    invitation_link = medication_group_invitation_token_url(invitation_token_service.call)
+    @invitation_link = medication_group_invitation_token_url(invitation_token_service.call)
 
-    # クリップボードにコピーするためjsonで連携
-    render json: {
-      success: true,
-      invitation_link: invitation_link
-    }
+    render turbo_stream: turbo_stream.update(
+      "invitation_url_container",
+      partial: "medication_group_invitations/url_display",
+      locals: { invitation_link: @invitation_link }
+    )
   end
 
   # 招待リンクのページ
