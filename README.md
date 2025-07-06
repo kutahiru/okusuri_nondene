@@ -119,3 +119,5 @@
   LINE Messaging API
 - 通知の並列処理
   Sidekiq+Active Job
+
+  ![image](https://github.com/user-attachments/assets/038590c3-accf-4052-9b57-fc6d680213ff)
