@@ -45,11 +45,11 @@ class MedicationGroupsController < ApplicationController
     if @medication_group.update(medication_group_update_param)
       render turbo_stream: [
         turbo_stream.replace(
-          @medication_group,
-          partial: "medication_groups/medication_group",
+          "group_name_header",
+          partial: "medication_groups/group_name_header",
           locals: { medication_group: @medication_group }
         ),
-        turbo_flash("success", "グループを更新しました")
+        turbo_flash("success", "グループ名を更新しました")
       ]
     else
       render turbo_stream: turbo_stream.update(

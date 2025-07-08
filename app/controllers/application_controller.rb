@@ -10,4 +10,10 @@ class ApplicationController < ActionController::Base
   add_flash_types :success, :error, :info, :warning
 
   include TurboFlashMessages
+
+  protected
+
+  def after_sign_in_path_for(resource)
+    session[:user_return_to] || medication_groups_path
+  end
 end

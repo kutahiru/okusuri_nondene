@@ -13,9 +13,11 @@
           <%= medication_group_user.user.user_name %>
         </h3>
       </div>
-      <span class="px-3 py-1 text-sm font-medium text-teal-700 bg-teal-50 rounded-full border border-teal-200">
-        <%= medication_group_user.user_type_i18n %>
-      </span>
+      <div class="flex justify-end sm:justify-start">
+        <span class="inline-block px-3 py-1 text-sm font-medium text-teal-700 bg-teal-50 rounded-full border border-teal-200">
+          <%= medication_group_user.user_type_i18n %>
+        </span>
+      </div>
     </div>
   </div>
 </div>

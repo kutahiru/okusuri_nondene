@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+
+/* Button group hover animations */
+.btn-group:hover .btn-group-hover\:scale-110 {
+  transform: scale(1.1);
+}
+
+.btn-group:hover .btn-group-hover\:rotate-12 {
+  transform: rotate(12deg);
+}
+
+.btn-group:hover .btn-group-hover\:opacity-100 {
+  opacity: 1;
+}
