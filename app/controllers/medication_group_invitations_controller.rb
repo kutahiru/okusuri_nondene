@@ -21,7 +21,7 @@ class MedicationGroupInvitationsController < ApplicationController
     @medication_group =  @medication_group_invitation.medication_group
 
     # ログイン後の戻り先URL
-    session["user_return_to"] = request.fullpath unless user_signed_in?
+    session[:user_return_to] = request.fullpath unless user_signed_in?
   end
 
   # 招待認証時の処理

@@ -61,16 +61,6 @@ Table medication_schedules {
   Note: '服薬スケジュール'
 }
 
-Table schedule_drugs {
-  id bigint [pk, increment]
-  medication_schedule_id bigint [not null]
-  drug_name varchar [not null, note: "薬剤名"]
-  created_at timestamp [not null]
-  updated_at timestamp [not null]
-  
-  Note: '服薬薬剤'
-}
-
 Table medication_managements {
   id bigint [pk, increment]
   medication_schedule_id bigint [not null]
@@ -102,7 +92,6 @@ Table reward_conditions {
 Table reward_histories {
   id bigint [pk, increment]
   medication_group_id bigint [not null]
-  medication_management_id bigint [note: "ご褒美獲得時の最終服薬 次回のカウント開始に利用"]
   reward_name varchar [not null, note: "ご褒美名"]
   reward_date date [not null, note: "ご褒美獲得日"]
   created_at timestamp [not null]
@@ -117,9 +106,7 @@ Ref: users.id < medication_group_users.user_id
 Ref: medication_groups.id < medication_group_invitations.medication_group_id
 Ref: users.id < medication_group_invitations.user_id
 Ref: medication_groups.id < medication_schedules.medication_group_id
-Ref: medication_schedules.id < schedule_drugs.medication_schedule_id
 Ref: medication_schedules.id < medication_managements.medication_schedule_id
 Ref: medication_groups.id < medication_managements.medication_group_id
-Ref: medication_groups.id < reward_conditions.medication_group_id
+Ref: medication_groups.id - reward_conditions.medication_group_id
 Ref: medication_groups.id < reward_histories.medication_group_id
-Ref: medication_managements.id - reward_histories.medication_management_id
