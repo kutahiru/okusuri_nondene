@@ -4,7 +4,7 @@
 
   <div class="px-6 py-2 my-4">
     <%# メンバー部 %>
-    <div class="mt-4 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:w-1/2 xl:w-1/3">
+    <div class=" bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:w-1/2 xl:w-1/3">
       <div class="flex items-center mb-6">
         <div class="w-10 h-10 bg-gradient-to-r from-teal-500 to-teal-600 rounded-xl flex items-center justify-center mr-3">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -21,24 +21,34 @@
 
       <div>
         <div class="flex flex-col sm:flex-row gap-3">
-          <%= button_to medication_group_medication_group_invitations_path(@medication_group),
-          method: :post,
-          class: "inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-all duration-200 hover:shadow-sm",
-          data: { disable_with: "発行中..." } do %>
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-            招待リンク
-          <% end %>
+          <div class="relative group">
+            <%= link_to edit_multiple_medication_group_medication_group_users_path(@medication_group.id),
+              class: "inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-lg transition-all duration-200 hover:shadow-sm group",
+              data: { turbo_frame: "modal" } do %>
+              <svg class="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              編集
+            <% end %>
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+              メンバーの役割を編集します
+            </div>
+          </div>
 
-          <%= link_to edit_multiple_medication_group_medication_group_users_path(@medication_group.id),
-            class: "inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-lg transition-all duration-200 hover:shadow-sm",
-            data: { turbo_frame: "modal" } do %>
-            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-            </svg>
-            編集
-          <% end %>
+          <div class="relative group">
+            <%= button_to medication_group_medication_group_invitations_path(@medication_group),
+            method: :post,
+            class: "inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-medium text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-all duration-200 hover:shadow-sm group",
+            data: { disable_with: "発行中..." } do %>
+              <svg class="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+              </svg>
+              招待リンク
+            <% end %>
+            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+              家族を招待するためのリンクを生成します
+            </div>
+          </div>
         </div>
 
         <!-- 招待URL表示エリア -->
