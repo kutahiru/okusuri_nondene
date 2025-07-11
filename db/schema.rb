@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_22_203858) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_10_082425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,11 +83,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_22_203858) do
     t.bigint "medication_group_id", null: false
     t.string "reward_name", null: false, comment: "ご褒美名"
     t.date "reward_date", null: false, comment: "ご褒美獲得日"
-    t.bigint "medication_management_id", comment: "ご褒美獲得時の最終服薬 次回のカウント開始に利用"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["medication_group_id"], name: "index_reward_histories_on_medication_group_id"
-    t.index ["medication_management_id"], name: "index_reward_histories_on_medication_management_id"
   end
 
   create_table "schedule_drugs", comment: "服薬薬剤", force: :cascade do |t|
@@ -117,6 +115,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_22_203858) do
   add_foreign_key "medication_schedules", "medication_groups"
   add_foreign_key "reward_conditions", "medication_groups"
   add_foreign_key "reward_histories", "medication_groups"
-  add_foreign_key "reward_histories", "medication_managements"
   add_foreign_key "schedule_drugs", "medication_schedules"
 end
