@@ -8,19 +8,21 @@ class RewardDatabaseService
       # トランザクション内でタイムゾーンを東京時間に設定（ローカルスコープ）
       ActiveRecord::Base.connection.execute("SET LOCAL TIME ZONE 'Asia/Tokyo'")
 
-      sql = <<~SQL
-        --グループごとに最新のご褒美履歴を取得
+      # グループごとに最新のご褒美履歴を取得
+      ActiveRecord::Base.connection.execute(<<~SQL)
         SELECT
            rh.medication_group_id
           ,MAX(rh.reward_date) AS max_reward_date
         INTO TEMP max_reward_histories
         FROM reward_histories rh
         GROUP BY rh.medication_group_id
+      SQL
 
-        -- 曜日条件と連続日数条件を必要な条件を取得
+      # 曜日条件と連続日数条件を必要な条件を取得
+      ActiveRecord::Base.connection.execute(<<~SQL)
         SELECT
            rc.medication_group_id
-          ,CASE#{' '}
+          ,CASE
             WHEN rc.condition_type = 'weekly' THEN 7
             WHEN rc.condition_type = 'daily_streak' THEN rc.target_value
            END AS target_value --必要な連続日数
@@ -28,7 +30,7 @@ class RewardDatabaseService
         FROM reward_conditions rc
         LEFT JOIN max_reward_histories rh ON
           rc.medication_group_id = rh.medication_group_id
-        WHERE#{' '}
+        WHERE
           (
             -- 曜日条件
             rc.condition_type = 'weekly'
@@ -41,8 +43,10 @@ class RewardDatabaseService
             rc.condition_type = 'daily_streak'
             AND (rh.max_reward_date IS NULL OR rh.max_reward_date <= CURRENT_DATE - rc.target_value)
           )
+      SQL
 
-        --「現在日 - t.target_valueの日付」から「昨日」までの間で、全て服薬している日付を取得
+      # 「現在日 - t.target_valueの日付」から「昨日」までの間で、全て服薬している日付を取得
+      ActiveRecord::Base.connection.execute(<<~SQL)
         SELECT
            mm.medication_group_id
           ,mm.medication_date
@@ -55,8 +59,10 @@ class RewardDatabaseService
         WHERE mm.medication_date BETWEEN CURRENT_DATE - t.target_value AND CURRENT_DATE - 1 --連続日数～昨日までが集計対象
         GROUP BY mm.medication_group_id, mm.medication_date
         HAVING bool_and(mm.is_taken)
+      SQL
 
-        --全て服薬している日付が連続日数(1週間の場合は7日)を満たしているグループとユーザーを取得
+      # 最終的な結果を取得
+      sql = <<~SQL
         SELECT
            gu.medication_group_id
           ,g.group_name

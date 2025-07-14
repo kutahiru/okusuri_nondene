@@ -1,4 +1,4 @@
-class LineNotificationJob < ApplicationJob
+class LineRewardJob < ApplicationJob
   sidekiq_options retry: false
 
   def perform(target_attributes)

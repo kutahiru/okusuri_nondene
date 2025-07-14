@@ -16,7 +16,7 @@ class GetRewardTargetsJob < ApplicationJob
       target_hash = target.attributes
 
       # JOBキューに登録
-      LineNotificationJob.set(wait_until: target.reward_date_time).perform_later(target_hash)
+      LineRewardJob.set(wait_until: target.reward_date_time).perform_later(target_hash)
     end
   end
 end
