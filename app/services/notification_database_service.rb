@@ -62,7 +62,6 @@ class NotificationDatabaseService
       )
 
       result.map do |row|
-        p row
         MedicationScheduleTarget.new(row.to_h)
       end
     end

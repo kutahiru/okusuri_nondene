@@ -8,3 +8,13 @@
       class: GetNotificationTargetsJob
       queue: default
       description: '30分毎に通知対象を取得'
+    get_reward_targets_11_00:
+      cron: '0 11 * * *'
+      class: GetRewardTargetsJob
+      queue: default
+      description: '11:00に報酬対象を取得'
+    get_reward_targets_11_30:
+      cron: '30 11 * * *'
+      class: GetRewardTargetsJob
+      queue: default
+      description: '11:30に報酬対象を取得'

@@ -99,6 +99,39 @@ class LineNotificationService
     status_code == 200
   end
 
+  # 服薬者にご褒美を通知
+  def self.medication_taker_reward_send_line_message(uid, group_name, reward_name)
+    lines = [
+      group_name,
+      reward_name,
+      "🎉ご褒美達成🎉",
+      "", # 空行
+      "", # 空行
+      ENV["APP_BASE_URL"]
+    ]
+
+    message_text = lines.join("\n")
+
+    send_line_message(uid, message_text)
+  end
+
+  # 見守り家族にご褒美を通知
+  def self.family_watcher_reward_send_line_message(uid, group_name, reward_name)
+    lines = [
+      group_name,
+      reward_name,
+      "🎉ご褒美達成🎉",
+      "ご褒美あげてね",
+      "", # 空行
+      "", # 空行
+      ENV["APP_BASE_URL"]
+    ]
+
+    message_text = lines.join("\n")
+
+    send_line_message(uid, message_text)
+  end
+
   private
 
   def self.client
