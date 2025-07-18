@@ -13,7 +13,7 @@
       <h3 class="text-2xl font-bold text-gray-900"><%= medication_group.group_name %></h3>
     </div>
 
-    <div class="relative btn-group w-full sm:w-auto">
+    <div class="relative btn-group w-full sm:w-fit">
       <%= link_to edit_medication_group_path(medication_group.id),
       class: "inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-lg transition-all duration-200 hover:shadow-sm",
       data: { turbo_frame: "modal" } do %>
@@ -22,7 +22,7 @@
         </svg>
         編集
       <% end %>
-      <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs text-white bg-gray-900 rounded opacity-0 btn-group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+      <div class="tooltip-base">
         グループ名を編集します
       </div>
     </div>

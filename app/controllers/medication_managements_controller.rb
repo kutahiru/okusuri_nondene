@@ -25,6 +25,10 @@ class MedicationManagementsController < ApplicationController
 
     @medication_managements = @medication_group.medication_managements
       .for_month(@target_date)
+      .with_rewards
+
+    @reward_histories = @medication_group.reward_histories
+      .for_month(@target_date)
 
     # 日付別にグループ化
     @medications_by_date = @medication_managements.group_by(&:medication_date)

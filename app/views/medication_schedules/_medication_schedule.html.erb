@@ -1,6 +1,6 @@
 <%= turbo_frame_tag medication_schedule do %>
 <div>
-  <div class="relative overflow-hidden bg-white rounded-2xl shadow-sm border border-gray-100">
+  <div class="relative overflow-visible bg-white rounded-2xl shadow-sm border border-gray-100">
     <div class="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-teal-400/20 to-teal-500/20 rounded-bl-full"></div>
     <div class="p-6">
       <div class="flex items-start justify-between mb-4">
@@ -40,26 +40,36 @@
       </div>
 
       <div class="flex flex-col sm:flex-row items-center gap-3 justify-start">
-        <%= link_to edit_medication_schedule_path(medication_schedule.id),
-          class: "inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-lg transition-all duration-200 hover:shadow-sm",
-          data: { turbo_frame: "modal" } do %>
-          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-          </svg>
-          編集
-        <% end %>
-        <%= link_to medication_schedule_path(medication_schedule.id),
-          method: :delete,
-          class: "inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-all duration-200 hover:shadow-sm",
-          data: {
-            turbo_method: :delete,
-            turbo_confirm: "本当に#{medication_schedule.title}を削除しますか？"
-          } do %>
-          <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-          </svg>
-          削除
-        <% end %>
+        <div class="relative btn-group w-full sm:w-auto">
+          <%= link_to edit_medication_schedule_path(medication_schedule.id),
+            class: "inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-lg transition-all duration-200 hover:shadow-sm btn-group",
+            data: { turbo_frame: "modal" } do %>
+            <svg class="w-4 h-4 mr-1 btn-group-hover:rotate-12 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+            編集
+          <% end %>
+          <div class="tooltip-base">
+            スケジュールを編集します
+          </div>
+        </div>
+        <div class="relative btn-group w-full sm:w-auto">
+          <%= link_to medication_schedule_path(medication_schedule.id),
+            method: :delete,
+            class: "inline-flex items-center justify-center w-full sm:w-auto px-4 py-2 text-sm font-medium text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-all duration-200 hover:shadow-sm btn-group",
+            data: {
+              turbo_method: :delete,
+              turbo_confirm: "本当に#{medication_schedule.title}を削除しますか？"
+            } do %>
+            <svg class="w-4 h-4 mr-1 btn-group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+            削除
+          <% end %>
+          <div class="tooltip-base">
+            スケジュールを削除します
+          </div>
+        </div>
       </div>
     </div>
   </div>
