@@ -28,18 +28,20 @@
     <div class="max-w-6xl mx-auto">
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <%# 左側15日まで %>
-        <div class="space-y-4">
+        <div class="space-y-2">
           <% @calendar_days.select { |day| day[:day] <= 15 }.each do |day_info| %>
             <% day_medications = @medications_by_date[day_info[:date]] || [] %>
-            <%= render "calendar_day", day_info: day_info, day_medications: day_medications %>
+            <% day_reward_history = @reward_histories.find { |reward_history| reward_history.reward_date == day_info[:date] } %>
+            <%= render "calendar_day", day_info: day_info, day_medications: day_medications, day_reward_history: day_reward_history %>
           <% end %>
         </div>
 
         <%# 右側16日以降 %>
-        <div class="space-y-4">
+        <div class="space-y-2">
           <% @calendar_days.select { |day| day[:day] > 15 }.each do |day_info| %>
             <% day_medications = @medications_by_date[day_info[:date]] || [] %>
-            <%= render "calendar_day", day_info: day_info, day_medications: day_medications %>
+            <% day_reward_history = @reward_histories.find { |reward_history| reward_history.reward_date == day_info[:date] } %>
+            <%= render "calendar_day", day_info: day_info, day_medications: day_medications, day_reward_history: day_reward_history %>
           <% end %>
         </div>
       </div>

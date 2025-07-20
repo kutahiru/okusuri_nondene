@@ -1,5 +1,5 @@
 <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
-  <div class="flex items-center justify-between mb-3">
+  <div class="flex items-center justify-between mb-1">
     <h3 class="text-lg font-semibold <%= 
       case day_info[:wday_name]
       when '日'
@@ -11,6 +11,24 @@
       end
     %>"><%= day_info[:display] %></h3>
   </div>
+
+  <% if day_reward_history.present? %>
+    <div class="mb-2">
+      <div class="flex items-center justify-between p-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+        <div class="flex-1">
+          <p class="text-sm font-medium text-gray-800"><%= day_reward_history.reward_name %></p>
+        </div>
+        <div class="flex items-center space-x-2">
+          <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-800">
+            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 16L3 7l5.5 5L12 4l3.5 8L21 7l-2 9H5z"/>
+            </svg>
+            ご褒美獲得
+          </span>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
   <% if day_medications.any? %>
     <div class="space-y-2">

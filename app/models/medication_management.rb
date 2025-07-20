@@ -1,7 +1,6 @@
 class MedicationManagement < ApplicationRecord
   belongs_to :medication_schedule
   belongs_to :medication_group
-  has_one :reward_history, dependent: :nullify
 
   validates :medication_date, presence: true
   validates :reminder_sent_count, presence: true, numericality: { greater_than_or_equal_to: 0 }
@@ -11,6 +10,15 @@ class MedicationManagement < ApplicationRecord
   # 指定月のスコープ（汎用的）
   scope :for_month, ->(date = Date.current) {
     where(medication_date: date.beginning_of_month..date.end_of_month)
+  }
+
+  # ご褒美履歴のjoin
+  scope :with_rewards, -> {
+    joins(
+      "LEFT JOIN reward_histories ON " \
+      "reward_histories.medication_group_id = medication_managements.medication_group_id " \
+      "AND reward_histories.reward_date = medication_managements.medication_date"
+    ).select("medication_managements.*, reward_histories.reward_name")
   }
 
   # 服薬済に変更する

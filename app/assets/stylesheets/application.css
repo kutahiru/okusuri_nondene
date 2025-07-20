@@ -26,3 +26,9 @@
 .btn-group:hover .btn-group-hover\:opacity-100 {
   opacity: 1;
 }
+
+.btn-group:hover .tooltip-base {
+  opacity: 1;
+}
+
+

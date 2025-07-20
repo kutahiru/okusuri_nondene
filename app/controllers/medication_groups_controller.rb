@@ -79,7 +79,7 @@ class MedicationGroupsController < ApplicationController
   def set_medication_group_detail
     @medication_group = current_user.medication_groups.find(params[:id])
     @medication_group_users = @medication_group.medication_group_users.includes(:user).order("medication_group_users.user_type DESC")
-    @medication_schedules = @medication_group.medication_schedules # グループに紐づくスケジュールを取得
+    @medication_schedules = @medication_group.medication_schedules.order(:medication_time) # グループに紐づくスケジュールを取得
     @reward_condition = @medication_group.reward_condition # グループに紐づくご褒美管理を取得
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
