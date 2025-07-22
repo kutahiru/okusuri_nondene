@@ -11,11 +11,12 @@ class User < ApplicationRecord
   has_many :medication_schedules, through: :medication_groups
   has_many :reward_conditions, through: :medication_groups
 
-  enum description_read: { not_read: false, read: true }, _prefix: :description
+  # Rails 8対応：位置引数 + 型明示
+  attribute :description_read, :boolean, default: false
+  enum :description_read, { not_read: false, read: true }, prefix: :description
 
   devise :rememberable,
          :omniauthable, omniauth_providers: [ :line ]
-
 
   def get_user_groups
     # 現在のユーザーが所属するグループとメンバー一覧を取得する

@@ -8,5 +8,5 @@ class RewardCondition < ApplicationRecord
   validates :target_weekday, presence: true, if: :condition_weekly?
   validates :target_value, presence: true, numericality: { greater_than: 0 }, if: :condition_daily_streak?
 
-  enum condition_type: { weekly: "weekly", daily_streak: "daily_streak" }, _prefix: :condition
+  enum :condition_type, { weekly: "weekly", daily_streak: "daily_streak" }, prefix: :condition
 end
