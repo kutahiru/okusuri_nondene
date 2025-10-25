@@ -6,5 +6,6 @@
       "Bash(ls:*)"
     ],
     "deny": []
-  }
+  },
+  "outputStyle": "Explanatory"
 }

@@ -26,6 +26,7 @@ export default class extends Controller {
         }
       }, delay)
 
+      //タイマーキャンセルのための配列
       this.timeouts.push(timeout)
     })
 
