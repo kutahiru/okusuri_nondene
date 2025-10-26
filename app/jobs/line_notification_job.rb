@@ -14,11 +14,25 @@ class LineNotificationJob < ApplicationJob
       # 服薬者の場合
       # リマインダー送信回数を加算する(異常時に何度もLINE通知送信を避けるため、送信回数加算が先)
       medication_management.increment!(:reminder_sent_count)
+
+      # LINE通知送信
       LineNotificationService.send_line_message_with_button(medication_management.id, notification_target.uid, notification_target.group_name, notification_target.schedule_title)
+
+      # WebPush通知送信
+      user = User.find_by(uid: notification_target.uid)
+      if user&.push_subscriptions&.active&.any?
+        WebPushNotificationService.send_medication_reminder(user, medication_management.id, notification_target.group_name, notification_target.schedule_title)
+      end
     else
       # 見守り家族の場合
       # LINE通知送信
       LineNotificationService.family_watcher_notification_delay_send_line_message(notification_target.uid, notification_target.group_name, notification_target.schedule_title)
+
+      # WebPush通知送信
+      user = User.find_by(uid: notification_target.uid)
+      if user&.push_subscriptions&.active&.any?
+        WebPushNotificationService.send_family_watcher_delay_notification(user, notification_target.group_name, notification_target.schedule_title)
+      end
     end
 
     # 見守り家族なら終了

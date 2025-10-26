@@ -34,6 +34,19 @@ class MedicationManagement < ApplicationRecord
     )
 
     # 服薬済に変更された場合、見守り家族に通知
-    LineNotificationService.family_watcher_medication_taken_send_line_message(medication_management, medication_management.medication_group.group_name)
+    group_name = medication_management.medication_group.group_name
+    schedule_title = medication_management.original_schedule_title
+
+    # LINE通知
+    LineNotificationService.family_watcher_medication_taken_send_line_message(medication_management, group_name)
+    
+    # WebPush通知（見守り家族全員）
+    family_watchers = MedicationGroupUser.find_family_watchers(medication_management.medication_group_id)
+    family_watchers.each do |family_watcher|
+      user = family_watcher.user
+      if user&.push_subscriptions&.active&.any?
+        WebPushNotificationService.send_family_watcher_taken_notification(user, group_name, schedule_title)
+      end
+    end
   end
 end

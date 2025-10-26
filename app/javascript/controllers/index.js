@@ -13,12 +13,17 @@ application.register("flash", FlashController)
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import InvitationController from "./invitation_controller"
+application.register("invitation", InvitationController)
 
 import MobileMenuController from "./mobile_menu_controller"
 application.register("mobile-menu", MobileMenuController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
+
+import PushNotificationController from "./push_notification_controller"
+application.register("push-notification", PushNotificationController)
 
 import RewardConditionFormController from "./reward_condition_form_controller"
 application.register("reward-condition-form", RewardConditionFormController)

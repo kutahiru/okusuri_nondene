@@ -15,6 +15,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <script>
+      window.vapidPublicKey = "<%= Rails.application.credentials.dig(:vapid, :public_key) %>"
+    </script>
+
     <%= yield :head %>
 
     <%# ファビコン %>
@@ -34,7 +38,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="pt-20 min-h-screen relative">
+  <body class="pt-20 min-h-screen relative" data-controller="push-notification">
     <%= render "shared/header" %>
     <div id="flash-container" class="fixed top-16 left-0 right-0 z-60 px-6"></div>
     <%= render "shared/flash_message" %>

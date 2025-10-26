@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_22_003610) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_25_073529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,6 +68,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_22_003610) do
     t.index ["medication_group_id"], name: "index_medication_schedules_on_medication_group_id"
   end
 
+  create_table "push_subscriptions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "endpoint"
+    t.string "p256dh"
+    t.string "auth"
+    t.string "user_agent"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_push_subscriptions_on_user_id"
+  end
+
   create_table "reward_conditions", comment: "ご褒美管理", force: :cascade do |t|
     t.bigint "medication_group_id", null: false
     t.string "reward_name", null: false, comment: "ご褒美名"
@@ -113,6 +125,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_22_003610) do
   add_foreign_key "medication_managements", "medication_groups"
   add_foreign_key "medication_managements", "medication_schedules"
   add_foreign_key "medication_schedules", "medication_groups"
+  add_foreign_key "push_subscriptions", "users"
   add_foreign_key "reward_conditions", "medication_groups"
   add_foreign_key "reward_histories", "medication_groups"
   add_foreign_key "schedule_drugs", "medication_schedules"

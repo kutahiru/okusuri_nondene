@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :medication_group_invitations, dependent: :destroy
   has_many :medication_schedules, through: :medication_groups
   has_many :reward_conditions, through: :medication_groups
+  has_many :push_subscriptions, dependent: :destroy
 
   # Rails 8対応：位置引数 + 型明示
   attribute :description_read, :boolean, default: false
