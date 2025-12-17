@@ -1,6 +1,7 @@
 class PushSubscriptionsController < ApplicationController
   before_action :authenticate_user!
 
+  # プッシュ通知の購読を作成または更新（同じendpointなら更新）
   def create
     existing_subscription = find_existing_subscription
 
@@ -17,6 +18,7 @@ class PushSubscriptionsController < ApplicationController
     }, status: :internal_server_error
   end
 
+  # プッシュ通知の購読を非アクティブ化（論理削除、active: false）
   def destroy
     subscription = current_user.push_subscriptions.find(params[:id])
     subscription.update(active: false)
@@ -31,17 +33,20 @@ class PushSubscriptionsController < ApplicationController
 
   private
 
+  # 現在のユーザーの購読から同じendpointを検索
   def find_existing_subscription
     current_user.push_subscriptions.find_by(
       endpoint: subscription_params[:endpoint]
     )
   end
 
+  # 既存の購読情報を更新してJSONレスポンスを返す
   def update_existing_subscription(subscription)
     subscription.update(subscription_attributes)
     render json: { status: "updated", subscription: subscription }
   end
 
+  # 新規購読を作成し、失敗時はバリデーションエラーを返す
   def create_new_subscription
     push_subscription = current_user.push_subscriptions.build(subscription_attributes)
 
@@ -55,6 +60,7 @@ class PushSubscriptionsController < ApplicationController
     end
   end
 
+  # Web Push購読の属性をハッシュで構築
   def subscription_attributes
     {
       endpoint: subscription_params[:endpoint],
@@ -65,6 +71,7 @@ class PushSubscriptionsController < ApplicationController
     }
   end
 
+  # Strong Parameters で許可された購読パラメータを取得
   def subscription_params
     @subscription_params ||= params.require(:subscription).permit(
       :endpoint,

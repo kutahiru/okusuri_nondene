@@ -19,8 +19,8 @@ class User < ApplicationRecord
   devise :rememberable,
          :omniauthable, omniauth_providers: [ :line ]
 
+  # 現在のユーザーが所属するグループとメンバー一覧を取得する
   def get_user_groups
-    # 現在のユーザーが所属するグループとメンバー一覧を取得する
     medication_groups.includes(medication_group_users: :user).order(id: :desc)
   end
 
