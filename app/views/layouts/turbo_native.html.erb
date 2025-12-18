@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "おくすり飲んでね" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# ファビコン %>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  </head>
+
+  <body class="pt-20 min-h-screen relative" data-controller="turbo-native push-notification">
+    <%= render "shared/header" %>
+    <div id="flash-container" class="fixed top-16 left-0 right-0 z-60 px-6"></div>
+    <%= render "shared/flash_message" %>
+    <div class="pb-32">
+      <%= yield %>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0">
+      <%= render "shared/footer" %>
+    </div>
+    <%= turbo_frame_tag "modal" %>
+  </body>
+</html>

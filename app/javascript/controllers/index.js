@@ -28,5 +28,8 @@ application.register("push-notification", PushNotificationController)
 import RewardConditionFormController from "./reward_condition_form_controller"
 application.register("reward-condition-form", RewardConditionFormController)
 
+import TurboNativeController from "./turbo_native_controller"
+application.register("turbo-native", TurboNativeController)
+
 import UrlCopyController from "./url_copy_controller"
 application.register("url-copy", UrlCopyController)

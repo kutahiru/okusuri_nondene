@@ -10,8 +10,15 @@ class ApplicationController < ActionController::Base
   add_flash_types :success, :error, :info, :warning
 
   include TurboFlashMessages
+  include TurboNativeHelper
+
+  layout :determine_layout
 
   protected
+
+  def determine_layout
+    turbo_native_app? ? "turbo_native" : "application"
+  end
 
   def after_sign_in_path_for(resource)
     session[:user_return_to] || medication_groups_path

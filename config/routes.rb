@@ -47,6 +47,9 @@ Rails.application.routes.draw do
   resources :push_subscriptions, only: %i[create destroy]
   post "/web_push_actions", to: "web_push_actions#create"
 
+  # Turbo Native
+  get "/turbo_native/configuration", to: "turbo_native#configuration"
+
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 end

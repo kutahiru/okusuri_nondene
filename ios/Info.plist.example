@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- アプリ名 -->
+    <key>CFBundleName</key>
+    <string>おくすり飲んでね</string>
+
+    <!-- アプリ表示名 -->
+    <key>CFBundleDisplayName</key>
+    <string>おくすり飲んでね</string>
+
+    <!-- バンドルID（Xcodeプロジェクト作成時に設定） -->
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+
+    <!-- バージョン -->
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+
+    <key>CFBundleVersion</key>
+    <string>1</string>
+
+    <!-- URL Schemes (ディープリンク用) -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLName</key>
+            <string>com.yourcompany.okusuri</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>okusuri</string>
+            </array>
+        </dict>
+    </array>
+
+    <!-- Universal Links (Associated Domains) -->
+    <!-- Xcodeの Signing & Capabilities で設定する方が推奨 -->
+    <key>com.apple.developer.associated-domains</key>
+    <array>
+        <string>applinks:okusuri.app</string>
+        <string>applinks:www.okusuri.app</string>
+    </array>
+
+    <!-- App Transport Security (開発環境用) -->
+    <!-- 本番環境では削除またはドメインを限定してください -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <!-- 本番環境では以下のように特定ドメインのみ許可 -->
+        <!--
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>yourdomain.com</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+            </dict>
+        </dict>
+        -->
+    </dict>
+
+    <!-- Camera & Photo Library (将来的にアイコンアップロードなどで使用する場合) -->
+    <key>NSCameraUsageDescription</key>
+    <string>プロフィール写真の撮影に使用します</string>
+
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>プロフィール写真の選択に使用します</string>
+
+    <!-- Push Notifications -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>remote-notification</string>
+    </array>
+
+    <!-- Scene Configuration -->
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+        <key>UISceneConfigurations</key>
+        <dict>
+            <key>UIWindowSceneSessionRoleApplication</key>
+            <array>
+                <dict>
+                    <key>UISceneConfigurationName</key>
+                    <string>Default Configuration</string>
+                    <key>UISceneDelegateClassName</key>
+                    <string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+                </dict>
+            </array>
+        </dict>
+    </dict>
+
+    <!-- Launch Screen -->
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+
+    <!-- Required Device Capabilities -->
+    <key>UIRequiredDeviceCapabilities</key>
+    <array>
+        <string>armv7</string>
+    </array>
+
+    <!-- Supported Interface Orientations -->
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+</dict>
+</plist>
