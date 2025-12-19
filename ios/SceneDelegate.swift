@@ -13,9 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Turbo Navigatorの初期化
         turboNavigator = TurboNavigator()
 
-        // ナビゲーションコントローラーを設定
-        let navigationController = UINavigationController(rootViewController: turboNavigator.rootViewController)
-        window?.rootViewController = navigationController
+        // ルートViewControllerを設定
+        window?.rootViewController = turboNavigator.rootViewController
         window?.makeKeyAndVisible()
 
         // アプリ起動時のURL処理（ディープリンクなど）

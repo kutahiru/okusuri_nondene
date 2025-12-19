@@ -4,7 +4,7 @@ module TurboNativeHelper
   extend ActiveSupport::Concern
 
   included do
-    helper_method :turbo_native_app?
+    helper_method :turbo_native_app?, :ios_app?, :android_app? if respond_to?(:helper_method)
   end
 
   # Turbo Nativeアプリからのリクエストかどうかを判定
